@@ -34,4 +34,4 @@
     <a href="booking" class="button">Booking</a><br>
 </body>
 
-</html>
+</html><?php /**PATH C:\Users\CENT\Downloads\Imp\Ubaya\Tugas\Sem 6\Web Framework Programming\Project_WFP\resources\views/welcome.blade.php ENDPATH**/ ?>

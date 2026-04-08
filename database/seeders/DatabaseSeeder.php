@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
             DoctorSeeder::class,
             ArticleSeeder::class,
             TransactionSeeder::class,
+            DoctorScheduleSeeder::class,
+            BookingSeeder::class,
         ]);
     }
 }

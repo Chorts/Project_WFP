@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Illuminate\Http\Request;
-use App\Models\Service;
-use Illuminate\Support\Facades\DB;
 
-class ServiceController extends Controller
+class BookingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $allServices = Service::with('category')->get();
-        return view('services.index', ['services' => $allServices]);
+        $allBooking = Booking::with(['doctor', 'schedule'])->get();
+        return view('bookings.index', ['bookings' => $allBooking]);
     }
 
     /**
@@ -36,7 +35,7 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Booking $booking)
     {
         //
     }
@@ -44,7 +43,7 @@ class ServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Booking $booking)
     {
         //
     }
@@ -52,7 +51,7 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Booking $booking)
     {
         //
     }
@@ -60,7 +59,7 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Booking $booking)
     {
         //
     }

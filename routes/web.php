@@ -3,6 +3,11 @@
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DoctorScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +29,10 @@ Route::get('/myprofile', function () {
 
 Route::resource('services', ServiceController::class);
 Route::resource('categories', CategoryController::class);
+Route::resource('doctors', DoctorController::class);
+Route::resource('articles', ArticleController::class);
+Route::resource('transactions', TransactionController::class);
+Route::resource('schedules', DoctorScheduleController::class);
+Route::resource('booking', BookingController::class);
 
 
