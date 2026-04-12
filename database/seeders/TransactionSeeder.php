@@ -19,14 +19,6 @@ class TransactionSeeder extends Seeder
                 'price' => 100000,
                 'transaction_date' => now(),
             ],
-            [
-                'patient_name' => 'Tonny',
-                'doctor_id' => 2,
-                'service_id' => 1,
-                'status' => 'Menunggu Pembayaran',
-                'price' => 150000,
-                'transaction_date' => now(),
-            ],
         ]);
     }
 }

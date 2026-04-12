@@ -12,19 +12,10 @@ class DoctorSeeder extends Seeder
     {
         DB::table('doctors')->insert([
             [
-                'name' => 'Dr. Cent',
-                'email' => 'cent@doc.com',
+                'name' => 'Dr. John',
+                'email' => 'john@doc.com',
                 'category_id' => 1,
-            ],
-            [
-                'name' => 'Dr. Will',
-                'email' => 'will@doc.com',
-                'category_id' => 2,
-            ],
-            [
-                'name' => 'Dr. Chris',
-                'email' => 'chris@doc.com',
-                'category_id' => 3,
+                'user_id' => 2,
             ],
         ]);
     }

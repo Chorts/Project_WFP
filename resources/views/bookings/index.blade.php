@@ -19,7 +19,8 @@
                     <td style="font-weight:bold">ID</td>
                     <td style="font-weight:bold">Patient Name</td>
                     <td style="font-weight:bold">Doctor Name</td>
-                    <td style="font-weight:bold">Schedule ID</td>
+                    <td style="font-weight:bold">Day</td>
+                    <td style="font-weight:bold">Time</td>
                     <td style="font-weight:bold">Status</td>
                     <td style="font-weight:bold">Booking Date</td>
                 </tr>
@@ -29,6 +30,9 @@
                         <td>{{ $booking->patient_name }}</td>
                         <td>{{ $booking->doctor->name }}</td>
                         <td>{{ $booking->schedule->day }}</td>
+                        <td>
+                            {{ $booking->schedule->start_time }} - {{ $booking->schedule->end_time }}
+                        </td>
                         <td>{{ $booking->status }}</td>
                         <td>{{ $booking->booking_date }}</td>
                     </tr>

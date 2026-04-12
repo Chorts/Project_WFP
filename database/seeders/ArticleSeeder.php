@@ -17,12 +17,6 @@ class ArticleSeeder extends Seeder
                 'date_published' => now(),
                 'doctor_id' => 1,
             ],
-            [
-                'title' => 'Cara Menjaga Kulit',
-                'article' => 'Gunakan sunscreen setiap hari.',
-                'date_published' => now(),
-                'doctor_id' => 2,
-            ],
         ]);
     }
 }

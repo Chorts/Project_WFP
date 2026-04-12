@@ -12,7 +12,8 @@ class Doctor extends Model
     protected $fillable = [
         'name',
         'email',
-        'category_id'
+        'category_id',
+        'user_id',
     ];
 
     public function category()
@@ -28,5 +29,10 @@ class Doctor extends Model
     public function appointments()
     {
         return $this->hasMany(Booking::class, 'doctor_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

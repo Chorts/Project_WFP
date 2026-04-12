@@ -31,7 +31,8 @@
     <a href="doctors" class="button">Doctors</a><br>
     <a href="transactions" class="button">Transactions</a><br>
     <a href="schedules" class="button">Schedules</a><br>
-    <a href="booking" class="button">Booking</a><br>
+    <a href="bookings" class="button">Booking</a><br>
+    <a href="users" class="button">Users</a><br>
 </body>
 
 </html>
