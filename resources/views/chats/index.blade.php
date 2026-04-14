@@ -17,22 +17,18 @@
             <tbody>
                 <tr>
                     <td style="font-weight:bold">ID</td>
-                    <td style="font-weight:bold">Patient Name</td>
-                    <td style="font-weight:bold">Doctor Name</td>
-                    <td style="font-weight:bold">Day</td>
+                    <td style="font-weight:bold">User ID</td>
+                    <td style="font-weight:bold">Doctor ID</td>
+                    <td style="font-weight:bold">Chat</td>
                     <td style="font-weight:bold">Time</td>
-                    <td style="font-weight:bold">Status</td>
-                    <td style="font-weight:bold">Booking Date</td>
                 </tr>
-                @foreach ($bookings as $booking)
+                @foreach ($chats as $c)
                     <tr>
-                        <td>{{ $booking->id }}</td>
-                        <td>{{ $booking->patient_name }}</td>
-                        <td>{{ $booking->doctor->name }}</td>
-                        <td>{{ $booking->schedule->day }}</td>
-                        <td>{{ $booking->schedule->start_time }} - {{ $booking->schedule->end_time }}</td>
-                        <td>{{ $booking->status }}</td>
-                        <td>{{ $booking->booking_date }}</td>
+                        <td>{{ $c->id }}</td>
+                        <td>{{ $c->user_id }}</td>
+                        <td>{{ $c->doctor_id }}</td>
+                        <td>{{ $c->chat }}</td>
+                        <td> {{ $c->created_at }} </td>
                     </tr>
                 @endforeach
             </tbody>

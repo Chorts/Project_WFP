@@ -31,8 +31,13 @@ class Doctor extends Model
         return $this->hasMany(Booking::class, 'doctor_id');
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class, 'doctor_id');
     }
 }
