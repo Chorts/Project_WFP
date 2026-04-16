@@ -13,11 +13,17 @@ class DoctorSchedule extends Model
         'doctor_id',
         'day',
         'start_time',
-        'end_time'
+        'end_time',
     ];
 
+    // Relasi ke dokter
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'schedule_id');
     }
 }

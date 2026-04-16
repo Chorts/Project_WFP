@@ -27,7 +27,7 @@
                 @foreach ($bookings as $booking)
                     <tr>
                         <td>{{ $booking->id }}</td>
-                        <td>{{ $booking->patient_name }}</td>
+                        <td>{{ $booking->user->name }}</td>
                         <td>{{ $booking->doctor->name }}</td>
                         <td>{{ $booking->schedule->day }}</td>
                         <td>{{ $booking->schedule->start_time }} - {{ $booking->schedule->end_time }}</td>

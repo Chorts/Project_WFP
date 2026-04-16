@@ -12,12 +12,44 @@ class TransactionSeeder extends Seeder
     {
         DB::table('transactions')->insert([
             [
-                'patient_name' => 'Vincent',
-                'doctor_id' => 1,
-                'service_id' => 1,
+                'booking_id' => 1,
                 'status' => 'Lunas',
-                'price' => 100000,
+                'price' => 50000,
                 'transaction_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'booking_id' => 2,
+                'status' => 'Lunas',
+                'price' => 50000,
+                'transaction_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'booking_id' => 3,
+                'status' => 'Menunggu Pembayaran',
+                'price' => 75000,
+                'transaction_date' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'booking_id' => 4,
+                'status' => 'Menunggu Pembayaran',
+                'price' => 75000,
+                'transaction_date' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'booking_id' => 5,
+                'status' => 'Dibatalkan',
+                'price' => 50000,
+                'transaction_date' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

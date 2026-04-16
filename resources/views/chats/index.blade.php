@@ -25,8 +25,8 @@
                 @foreach ($chats as $c)
                     <tr>
                         <td>{{ $c->id }}</td>
-                        <td>{{ $c->user_id }}</td>
-                        <td>{{ $c->doctor_id }}</td>
+                        <td>{{ $c->sender->name }}</td>
+                        <td>{{ $c->booking->doctor->name }}</td>
                         <td>{{ $c->chat }}</td>
                         <td> {{ $c->created_at }} </td>
                     </tr>

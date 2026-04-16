@@ -12,11 +12,12 @@ return new class extends Migration
             $table->id();
             $table->string('service_name');
             $table->string('description');
-            $table->string('availability');
             $table->double('price');
 
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
+
+            $table->enum('tipe_service', ['Chat', 'Offline'])->default('Offline');
 
             $table->timestamps();
         });

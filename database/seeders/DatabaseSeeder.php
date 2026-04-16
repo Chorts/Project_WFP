@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             CategoriesSeeder::class,
+            SpecializationSeeder::class,
             ServiceSeeder::class,
             DoctorSeeder::class,
-            ArticleSeeder::class,
-            TransactionSeeder::class,
             DoctorScheduleSeeder::class,
+            ArticleSeeder::class,
             BookingSeeder::class,
+            TransactionSeeder::class,
+            ChatSeeder::class,
         ]);
     }
 }

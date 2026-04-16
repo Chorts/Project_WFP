@@ -12,17 +12,18 @@ class Service extends Model
     protected $fillable = [
         'service_name',
         'description',
-        'availability',
         'price',
-        'category_id'
+        'category_id',
+        'tipe_service', 
     ];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function transactions()
+    public function bookings()
     {
-        return $this->hasMany(Transaction::class, 'service_id');
+        return $this->hasMany(Booking::class, 'service_id');
     }
 }

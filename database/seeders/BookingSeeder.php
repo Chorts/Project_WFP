@@ -15,8 +15,8 @@ class BookingSeeder extends Seeder
     {
         DB::table('bookings')->insert([
             [
-                'patient_name' => 'Budi Santoso',
-                'doctor_id' => 1,
+                'user_id' => 3,
+                'service_id' => 1,
                 'schedule_id' => 1,
                 'status' => 'Selesai',
                 'booking_date' => '2026-04-10',
@@ -24,8 +24,8 @@ class BookingSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'patient_name' => 'Siti Aminah',
-                'doctor_id' => 1,
+                'user_id' => 7,
+                'service_id' => 1,
                 'schedule_id' => 2,
                 'status' => 'Selesai',
                 'booking_date' => '2026-04-11',
@@ -33,8 +33,8 @@ class BookingSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'patient_name' => 'Ahmad Wijaya',
-                'doctor_id' => 1,
+                'user_id' => 8,
+                'service_id' => 1,
                 'schedule_id' => 3,
                 'status' => 'Dipesan',
                 'booking_date' => '2026-04-12',
@@ -42,11 +42,20 @@ class BookingSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'patient_name' => 'Dewi Lestari',
-                'doctor_id' => 1,
+                'user_id' => 3,
+                'service_id' => 1,
                 'schedule_id' => 4,
                 'status' => 'Dipesan',
                 'booking_date' => '2026-04-13',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 7,
+                'service_id' => 1,
+                'schedule_id' => 1,
+                'status' => 'Dibatalkan',
+                'booking_date' => '2026-04-14',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

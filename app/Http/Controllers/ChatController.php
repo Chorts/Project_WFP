@@ -12,7 +12,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        $allChats = Chat::with(['user', 'doctor'])->get();
+        $allChats = Chat::with(['sender'])->get();
         return view('chats.index', ['chats' => $allChats]);
     }
 

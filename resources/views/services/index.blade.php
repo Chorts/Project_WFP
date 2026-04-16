@@ -19,20 +19,20 @@
                         <td style="font-weight:bold">ID</td>
                         <td style="font-weight:bold">Service Name</td>
                         <td style="font-weight:bold">Description</td>
-                        <td style="font-weight:bold">Availability</td>
                         <td style="font-weight:bold">Price</td>
                         <td style="font-weight:bold">Category ID</td>
                         <td style="font-weight:bold">Category Name</td>
+                        <td style="font-weight:bold">Tipe Service</td>
                     </tr>
                 @foreach ($services as $service)
                     <tr>
                         <td>{{ $service->id }}</td>
                         <td>{{ $service->service_name }}</td>
                         <td>{{ $service->description }}</td>
-                        <td>{{ $service->availability }}</td>
                         <td>{{ $service->price }}</td>
                         <td>{{ $service->category_id }}</td>
                         <td>{{ $service->category->category_name }}</td>
+                        <td>{{ $service->tipe_service }}</td>
                     </tr>
                 @endforeach
             </tbody>

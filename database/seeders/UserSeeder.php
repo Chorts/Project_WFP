@@ -39,6 +39,46 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'Dr. Cent',
+                'email' => 'cent@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'doctor',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Dr. Sarah',
+                'email' => 'sarah.doctor@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'doctor',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Dr. Michael',
+                'email' => 'michael.doc@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'doctor',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Andi Saputra',
+                'email' => 'andi@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'member',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Siti Rahma',
+                'email' => 'siti@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'member',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

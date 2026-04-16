@@ -17,6 +17,8 @@
             <tbody>
                 <tr>
                     <td style="font-weight:bold">ID</td>
+                    <td style="font-weight:bold">Booking ID</td>
+                    <td style="font-weight:bold">Patient ID</td>
                     <td style="font-weight:bold">Patient Name</td>
                     <td style="font-weight:bold">Doctor ID</td>
                     <td style="font-weight:bold">Doctor Name</td>
@@ -29,11 +31,13 @@
                 @foreach ($transactions as $transaction)
                     <tr>
                         <td>{{ $transaction->id }}</td>
-                        <td>{{ $transaction->patient_name }}</td>
-                        <td>{{ $transaction->doctor_id }}</td>
-                        <td>{{ $transaction->doctor->name }}</td>
-                        <td>{{ $transaction->service_id }}</td>
-                        <td>{{ $transaction->service->service_name}}</td>
+                        <td>{{ $transaction->booking->id }}</td>
+                        <td>{{ $transaction->booking->user->id }}</td>
+                        <td>{{ $transaction->booking->user->name }}</td>
+                        <td>{{ $transaction->booking->doctor_id }}</td>
+                        <td>{{ $transaction->booking->doctor->name }}</td>
+                        <td>{{ $transaction->booking->service_id }}</td>
+                        <td>{{ $transaction->booking->service->service_name }}</td>
                         <td>{{ $transaction->status }}</td>
                         <td>{{ $transaction->price }}</td>
                         <td>{{ $transaction->transaction_date }}</td>

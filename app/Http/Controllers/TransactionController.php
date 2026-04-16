@@ -12,7 +12,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $allTransactions = Transaction::with(['doctor', 'service'])->get();
+        $allTransactions = Transaction::with(['booking'])->get();
         return view('transactions.index', ['transactions' => $allTransactions]);
     }
 

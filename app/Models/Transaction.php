@@ -10,21 +10,15 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'patient_name',
-        'doctor_id',
-        'service_id',
+        'booking_id',
         'status',
         'price',
         'transaction_date'
     ];
 
-    public function doctor()
+    // Relasi ke Booking
+    public function booking()
     {
-        return $this->belongsTo(Doctor::class, 'doctor_id');
-    }
-
-    public function service()
-    {
-        return $this->belongsTo(Service::class, 'service_id');
+        return $this->belongsTo(Booking::class, 'booking_id');
     }
 }

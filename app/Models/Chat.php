@@ -10,20 +10,19 @@ class Chat extends Model
     use HasFactory;
 
     protected $fillable = [
+        'booking_id',
+        'sender_id',
+        'tipe_sender',
         'chat',
-        'doctor_id',
-        'user_id',
     ];
 
-    // Relasi ke doctor
-    public function doctor()
+    public function booking()
     {
-        return $this->belongsTo(Doctor::class, 'doctor_id');
+        return $this->belongsTo(Booking::class, 'booking_id');
     }
 
-    // Relasi ke service
-    public function user()
+    public function sender()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'sender_id');
     }
 }

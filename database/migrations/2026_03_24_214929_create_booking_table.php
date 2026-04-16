@@ -13,16 +13,16 @@ return new class extends Migration {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
 
-            $table->string('patient_name');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('doctor_id');
-            $table->foreign('doctor_id')->references('id')->on('doctors');
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services');
 
             $table->unsignedBigInteger('schedule_id');
             $table->foreign('schedule_id')->references('id')->on('doctor_schedules');
 
-            $table->enum('status', ['Dipesan', 'Dibatalkan', 'Selesai'])
-                ->default('Dipesan');
+            $table->enum('status', ['Dipesan', 'Dibatalkan', 'Selesai'])->default('Dipesan');
 
             $table->date('booking_date');
 
@@ -35,6 +35,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking');
+        Schema::dropIfExists('bookings');
     }
 };

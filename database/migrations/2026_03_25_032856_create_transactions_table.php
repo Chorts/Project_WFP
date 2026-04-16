@@ -10,22 +10,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_name');
 
-            $table->unsignedBigInteger('doctor_id');
-            $table->foreign('doctor_id')->references('id')->on('doctors');
+            $table->unsignedBigInteger('booking_id');
+            $table->foreign('booking_id')->references('id')->on('bookings');
 
-            $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services');
-
-            $table->enum('status', [
-                'Menunggu Pembayaran',
-                'Dibatalkan',
-                'Lunas'
-            ])->default('Menunggu Pembayaran');
+            $table->enum('status', ['Menunggu Pembayaran', 'Dibatalkan', 'Lunas'])->default('Menunggu Pembayaran');
 
             $table->double('price');
-            $table->timestamp('transaction_date');
+
+            $table->timestamp('transaction_date')->nullable();
 
             $table->timestamps();
         });

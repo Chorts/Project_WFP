@@ -12,13 +12,13 @@ class Doctor extends Model
     protected $fillable = [
         'name',
         'email',
-        'category_id',
+        'specialization_id',
         'user_id',
     ];
 
-    public function category()
+    public function specialization()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Specialization::class, 'specialization_id');
     }
 
     public function schedules()
@@ -34,10 +34,5 @@ class Doctor extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function chats()
-    {
-        return $this->hasMany(Chat::class, 'doctor_id');
     }
 }

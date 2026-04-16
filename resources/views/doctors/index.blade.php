@@ -27,8 +27,8 @@
                         <td>{{ $doctor->id }}</td>
                         <td>{{ $doctor->name }}</td>
                         <td>{{ $doctor->email }}</td>
-                        <td>{{ $doctor->category_id }}</td>
-                        <td>{{ $doctor->category->category_name}}</td>
+                        <td>{{ $doctor->specialization_id }}</td>
+                        <td>{{ $doctor->specialization->name}}</td>
                     </tr>
                 @endforeach
             </tbody>

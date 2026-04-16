@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Specialization extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'category_name'
+        'name',
     ];
 
-    // Relasi ke service
-    public function services()
+    public function doctors()
     {
-        return $this->hasMany(Service::class, 'category_id');
+        return $this->hasMany(Doctor::class);
     }
 }
