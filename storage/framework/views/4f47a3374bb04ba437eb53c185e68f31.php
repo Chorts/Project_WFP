@@ -27,8 +27,8 @@
                         <td><?php echo e($doctor->id); ?></td>
                         <td><?php echo e($doctor->name); ?></td>
                         <td><?php echo e($doctor->email); ?></td>
-                        <td><?php echo e($doctor->category_id); ?></td>
-                        <td><?php echo e($doctor->category->category_name); ?></td>
+                        <td><?php echo e($doctor->specialization_id); ?></td>
+                        <td><?php echo e($doctor->specialization->name); ?></td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>

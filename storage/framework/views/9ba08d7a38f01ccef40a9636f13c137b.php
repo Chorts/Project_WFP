@@ -27,13 +27,10 @@
                 <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td><?php echo e($booking->id); ?></td>
-                        <td><?php echo e($booking->patient_name); ?></td>
-                        <td><?php echo e($booking->doctor->name); ?></td>
+                        <td><?php echo e($booking->user->name); ?></td>
+                        <td><?php echo e($booking->schedule->doctor->name); ?></td>
                         <td><?php echo e($booking->schedule->day); ?></td>
-                        <td>
-                            <?php echo e($booking->schedule->start_time); ?> - <?php echo e($booking->schedule->end_time); ?>
-
-                        </td>
+                        <td><?php echo e($booking->schedule->start_time); ?> - <?php echo e($booking->schedule->end_time); ?></td>
                         <td><?php echo e($booking->status); ?></td>
                         <td><?php echo e($booking->booking_date); ?></td>
                     </tr>

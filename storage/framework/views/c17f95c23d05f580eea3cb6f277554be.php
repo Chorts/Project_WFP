@@ -18,22 +18,22 @@
                 <tr>
                     <td style="font-weight:bold">ID</td>
                     <td style="font-weight:bold">Sender</td>
-                    <td style="font-weight:bold">Doctor Name</td>
+                    <td style="font-weight:bold">Doctor ID</td>
                     <td style="font-weight:bold">Chat</td>
                     <td style="font-weight:bold">Time</td>
                 </tr>
-                @foreach ($chats as $c)
+                <?php $__currentLoopData = $chats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td>{{ $c->id }}</td>
-                        <td>{{ $c->sender->name }}</td>
-                        <td>{{ $c->booking->schedule->doctor->name }}</td>
-                        <td>{{ $c->chat }}</td>
-                        <td> {{ $c->created_at }} </td>
+                        <td><?php echo e($c->id); ?></td>
+                        <td><?php echo e($c->sender->name); ?></td>
+                        <td><?php echo e($c->booking->schedule->doctor->name); ?></td>
+                        <td><?php echo e($c->chat); ?></td>
+                        <td> <?php echo e($c->created_at); ?> </td>
                     </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
         </table>
     </div>
 </body>
 
-</html>
+</html><?php /**PATH C:\Users\CENT\Downloads\Imp\Ubaya\Tugas\Sem 6\Web Framework Programming\Project_WFP\resources\views/chats/index.blade.php ENDPATH**/ ?>

@@ -7,6 +7,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DoctorScheduleController;
 use App\Http\Controllers\UserController;
 
@@ -36,5 +37,6 @@ Route::resource('transactions', TransactionController::class);
 Route::resource('schedules', DoctorScheduleController::class);
 Route::resource('bookings', BookingController::class);
 Route::resource('users', UserController::class);
+Route::resource('chats', ChatController::class);
 
 

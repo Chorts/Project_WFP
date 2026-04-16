@@ -35,7 +35,7 @@
                         <td>{{ $transaction->booking->user->id }}</td>
                         <td>{{ $transaction->booking->user->name }}</td>
                         <td>{{ $transaction->booking->doctor_id }}</td>
-                        <td>{{ $transaction->booking->doctor->name }}</td>
+                        <td>{{ $transaction->booking->schedule->doctor->name }}</td>
                         <td>{{ $transaction->booking->service_id }}</td>
                         <td>{{ $transaction->booking->service->service_name }}</td>
                         <td>{{ $transaction->status }}</td>

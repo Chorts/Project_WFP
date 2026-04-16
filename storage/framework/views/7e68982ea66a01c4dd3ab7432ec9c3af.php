@@ -17,6 +17,8 @@
             <tbody>
                 <tr>
                     <td style="font-weight:bold">ID</td>
+                    <td style="font-weight:bold">Booking ID</td>
+                    <td style="font-weight:bold">Patient ID</td>
                     <td style="font-weight:bold">Patient Name</td>
                     <td style="font-weight:bold">Doctor ID</td>
                     <td style="font-weight:bold">Doctor Name</td>
@@ -29,11 +31,13 @@
                 <?php $__currentLoopData = $transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td><?php echo e($transaction->id); ?></td>
-                        <td><?php echo e($transaction->patient_name); ?></td>
-                        <td><?php echo e($transaction->doctor_id); ?></td>
-                        <td><?php echo e($transaction->doctor->name); ?></td>
-                        <td><?php echo e($transaction->service_id); ?></td>
-                        <td><?php echo e($transaction->service->service_name); ?></td>
+                        <td><?php echo e($transaction->booking->id); ?></td>
+                        <td><?php echo e($transaction->booking->user->id); ?></td>
+                        <td><?php echo e($transaction->booking->user->name); ?></td>
+                        <td><?php echo e($transaction->booking->doctor_id); ?></td>
+                        <td><?php echo e($transaction->booking->schedule->doctor->name); ?></td>
+                        <td><?php echo e($transaction->booking->service_id); ?></td>
+                        <td><?php echo e($transaction->booking->service->service_name); ?></td>
                         <td><?php echo e($transaction->status); ?></td>
                         <td><?php echo e($transaction->price); ?></td>
                         <td><?php echo e($transaction->transaction_date); ?></td>

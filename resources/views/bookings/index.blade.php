@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{ $booking->id }}</td>
                         <td>{{ $booking->user->name }}</td>
-                        <td>{{ $booking->doctor->name }}</td>
+                        <td>{{ $booking->schedule->doctor->name }}</td>
                         <td>{{ $booking->schedule->day }}</td>
                         <td>{{ $booking->schedule->start_time }} - {{ $booking->schedule->end_time }}</td>
                         <td>{{ $booking->status }}</td>
