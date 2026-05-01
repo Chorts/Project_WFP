@@ -26,8 +26,8 @@
 </head>
 
 <body> -->
-@extends("layouts.adminlte4")
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <a href="articles" class="btn">Articles</a><br>
     <a href="services" class="btn btn-primary">Services</a><br>
     <a href="doctors" class="btn btn-primary">Doctors</a><br>
@@ -39,4 +39,5 @@
     <!-- </body>
 
     </html> -->
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("layouts.adminlte4", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\wfp\Project UTS\Project_WFP\resources\views/welcome.blade.php ENDPATH**/ ?>

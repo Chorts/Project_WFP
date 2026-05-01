@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,7 +10,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body> -->
+@extends('layouts.adminlte4')
+@section('sidebar-chats')
+    active
+@endsection
+@section('title')
+    Chats
+@endsection
+@section('content')
     <div class="container">
         <table class="table">
             </thead>
@@ -34,6 +42,7 @@
             </tbody>
         </table>
     </div>
-</body>
+    <!-- </body>
 
-</html>
+    </html> -->
+@endsection
