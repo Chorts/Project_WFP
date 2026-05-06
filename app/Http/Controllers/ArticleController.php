@@ -29,15 +29,18 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+
         //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Article $article)
+    public function show(String $idArticle)
     {
-        //
+        $article = Article::find($idArticle);
+
+        return view("articles.show", ['article' => $article]);
     }
 
     /**

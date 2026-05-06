@@ -13,38 +13,42 @@
 <body> -->
 @extends('layouts.adminlte4')
 @section('sidebar-articles')
-    active
+active
 @endsection
 @section('title')
-    Articles
+Articles
 @endsection
 @section('content')
-    <div class="container">
-        <table class="table">
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="font-weight:bold">ID</td>
-                    <td style="font-weight:bold">Title</td>
-                    <td style="font-weight:bold">Article</td>
-                    <td style="font-weight:bold">Date Published</td>
-                    <td style="font-weight:bold">Doctor ID</td>
-                    <td style="font-weight:bold">Doctor Name</td>
-                </tr>
-                @foreach ($articles as $article)
-                    <tr>
-                        <td>{{ $article->id }}</td>
-                        <td>{{ $article->title }}</td>
-                        <td>{{ $article->article }}</td>
-                        <td>{{ $article->date_published }}</td>
-                        <td>{{ $article->doctor_id }}</td>
-                        <td>{{ $article->doctor->name }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <!-- </body>
+<div class="container">
+    <table class="table">
+        </thead>
+        <tbody>
+            <tr>
+                <td style="font-weight:bold">ID</td>
+                <td style="font-weight:bold">Title</td>
+                <td style="font-weight:bold">Article</td>
+                <td style="font-weight:bold">Date Published</td>
+                <td style="font-weight:bold">Doctor ID</td>
+                <td style="font-weight:bold">Doctor Name</td>
+            </tr>
+            @foreach ($articles as $article)
+            <tr>
+                <td>
+                    {{ $article->id }}
+                </td>
+                <td>
+                    <a href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
+                </td>
+                <td>{{ $article->article }}</td>
+                <td>{{ $article->date_published }}</td>
+                <td>{{ $article->doctor_id }}</td>
+                <td>{{ $article->doctor->name }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+<!-- </body>
 
     </html> -->
 @endsection

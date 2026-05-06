@@ -13,40 +13,44 @@
 <body> -->
 @extends('layouts.adminlte4')
 @section('sidebar-services')
-    active
+active
 @endsection
 @section('title')
-    Services
+Services
 @endsection
 @section('content')
-    <div class="container">
-        <table class="table">
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="font-weight:bold">ID</td>
-                    <td style="font-weight:bold">Service Name</td>
-                    <td style="font-weight:bold">Description</td>
-                    <td style="font-weight:bold">Price</td>
-                    <td style="font-weight:bold">Category ID</td>
-                    <td style="font-weight:bold">Category Name</td>
-                    <td style="font-weight:bold">Tipe Service</td>
-                </tr>
-                @foreach ($services as $service)
-                    <tr>
-                        <td>{{ $service->id }}</td>
-                        <td>{{ $service->service_name }}</td>
-                        <td>{{ $service->description }}</td>
-                        <td>{{ $service->price }}</td>
-                        <td>{{ $service->category_id }}</td>
-                        <td>{{ $service->category->category_name }}</td>
-                        <td>{{ $service->tipe_service }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <!-- </body>
+<div class="container">
+    <table class="table">
+        </thead>
+        <tbody>
+            <tr>
+                <td style="font-weight:bold">ID</td>
+                <td style="font-weight:bold">Service Name</td>
+                <td style="font-weight:bold">Description</td>
+                <td style="font-weight:bold">Price</td>
+                <td style="font-weight:bold">Category ID</td>
+                <td style="font-weight:bold">Category Name</td>
+                <td style="font-weight:bold">Tipe Service</td>
+            </tr>
+            @foreach ($services as $service)
+            <tr>
+                <td>{{ $service->id }}</td>
+                <td>
+                    <a href="{{ route('services.show', $service->id) }}">
+                        {{ $service->service_name }}
+                    </a>
+                </td>
+                <td>{{ $service->description }}</td>
+                <td>{{ $service->price }}</td>
+                <td>{{ $service->category_id }}</td>
+                <td>{{ $service->category->category_name }}</td>
+                <td>{{ $service->tipe_service }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+<!-- </body>
 
     </html> -->
 @endsection
