@@ -29,14 +29,37 @@ Route::get('/myprofile', function () {
     return view('about-me');
 });
 
-Route::resource('services', ServiceController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('doctors', DoctorController::class);
-Route::resource('articles', ArticleController::class);
-Route::resource('transactions', TransactionController::class);
-Route::resource('schedules', DoctorScheduleController::class);
-Route::resource('bookings', BookingController::class);
-Route::resource('users', UserController::class);
-Route::resource('chats', ChatController::class);
+
+Route::middleware(["auth"])->group(function () {
+    Route::resource('services', ServiceController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('doctors', DoctorController::class);
+    Route::resource('articles', ArticleController::class);
+    Route::resource('transactions', TransactionController::class);
+    Route::resource('schedules', DoctorScheduleController::class);
+    Route::resource('bookings', BookingController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('chats', ChatController::class);
+});
 
 
+// Route::resource('services', ServiceController::class);
+// Route::resource('categories', CategoryController::class);
+// Route::resource('doctors', DoctorController::class);
+// Route::resource('articles', ArticleController::class);
+// Route::resource('transactions', TransactionController::class);
+// Route::resource('schedules', DoctorScheduleController::class);
+// Route::resource('bookings', BookingController::class);
+// Route::resource('users', UserController::class);
+// Route::resource('chats', ChatController::class);
+
+
+Route::post('/ajax/services/getEditForm', [ServiceController::class, 'getEditForm'])->name('services.getEditForm');
+Route::post('/ajax/services/getEditFormB', [ServiceController::class, 'getEditFormB'])->name('services.getEditFormB');
+Route::post('/ajax/services/saveDataUpdate', [ServiceController::class, 'saveDataUpdate'])->name('services.saveDataUpdate');
+Route::post('/ajax/services/deleteData', [ServiceController::class, 'deleteData'])->name('services.deleteData');
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

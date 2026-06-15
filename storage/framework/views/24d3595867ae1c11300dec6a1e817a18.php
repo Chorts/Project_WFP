@@ -186,7 +186,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="<?php echo e(asset('adminlte4/assets/img/user2-160x160.jpg')); ?>"
                                 class="user-image rounded-circle shadow" alt="User Image" />
-                            <span class="d-none d-md-inline">Alexander Pierce</span>
+                            <span class="d-none d-md-inline"><?php echo e(Auth::user()->name); ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
@@ -194,8 +194,8 @@
                                 <img src="<?php echo e(asset('adminlte4/assets/img/user2-160x160.jpg')); ?>"
                                     class="rounded-circle shadow" alt="User Image" />
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
+                                    <?php echo e(Auth::user()->name); ?> (<?php echo e(Auth::user()->role); ?>)
+                                    <small><?php echo e(Auth::user()->email); ?></small>
                                 </p>
                             </li>
                             <!--end::User Image-->
@@ -213,7 +213,10 @@
                             <!--begin::Menu Footer-->
                             <li class="user-footer">
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                                <form action="<?php echo e(route('logout')); ?>" method="post">
+                                    <?php echo csrf_field(); ?>
+                                    <button class="btn btn-default btn-flat float-end" type="submit">Log Out</button>
+                                </form>
                             </li>
                             <!--end::Menu Footer-->
                         </ul>
@@ -255,24 +258,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo e(url('categories')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-categories'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
-                          <li class="nav-item">
                             <a href="<?php echo e(url('doctors')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Doctors</p>
                             </a>
                         </li>
-                          <li class="nav-item">
+                        <li class="nav-item">
                             <a href="<?php echo e(url('transactions')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-transactions'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Transactions</p>
                             </a>
                         </li>
-                          <li class="nav-item">
+                        <li class="nav-item">
                             <a href="<?php echo e(url('articles')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-articles'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Articles</p>
@@ -290,13 +287,13 @@
                                 <p>Users</p>
                             </a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a href="<?php echo e(route('chats.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-chats'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Chats</p>
                             </a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a href="<?php echo e(route('schedules.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-schedules'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Schedules</p>
@@ -725,6 +722,7 @@
         <!--begin::App Main-->
         <main class="app-main">
             <?php echo $__env->yieldContent('content'); ?>
+            <?php echo $__env->yieldPushContent('modals'); ?>
         </main>
         <!--end::App Main-->
         <!--begin::Footer-->
@@ -744,6 +742,7 @@
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
@@ -973,6 +972,7 @@
         sparkline3.render();
     </script>
     <!--end::Script-->
+    <?php echo $__env->yieldPushContent("script"); ?>
 </body>
 <!--end::Body-->
 

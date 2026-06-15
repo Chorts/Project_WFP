@@ -186,7 +186,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="{{asset('adminlte4/assets/img/user2-160x160.jpg')}}"
                                 class="user-image rounded-circle shadow" alt="User Image" />
-                            <span class="d-none d-md-inline">Alexander Pierce</span>
+                            <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <!--begin::User Image-->
@@ -194,8 +194,8 @@
                                 <img src="{{asset('adminlte4/assets/img/user2-160x160.jpg')}}"
                                     class="rounded-circle shadow" alt="User Image" />
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
+                                    {{ Auth::user()->name }} ({{ Auth::user()->role }})
+                                    <small>{{ Auth::user()->email }}</small>
                                 </p>
                             </li>
                             <!--end::User Image-->
@@ -213,7 +213,10 @@
                             <!--begin::Menu Footer-->
                             <li class="user-footer">
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button class="btn btn-default btn-flat float-end" type="submit">Log Out</button>
+                                </form>
                             </li>
                             <!--end::Menu Footer-->
                         </ul>
@@ -719,6 +722,7 @@
         <!--begin::App Main-->
         <main class="app-main">
             @yield('content')
+            @stack('modals')
         </main>
         <!--end::App Main-->
         <!--begin::Footer-->
@@ -738,6 +742,7 @@
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
@@ -967,6 +972,7 @@
         sparkline3.render();
     </script>
     <!--end::Script-->
+    @stack("script")
 </body>
 <!--end::Body-->
 

@@ -4,6 +4,10 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Auth\Access\Response;
+use Gate;
+
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Cara 1 (Gates Only)
+        Gate::define("delete-permission", function ($user) {
+            return ($user->role == "admin") ?
+                Response::allow() :
+                Response::deny("Only admins are allowed to perform this operation");
+        });
+
+        //Cara 2 (Gates with POLICY)
+        Gate::define("delete-permission", "App\Policies\CategoryPolicy@delete");
     }
 }
