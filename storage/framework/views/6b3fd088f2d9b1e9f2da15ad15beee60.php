@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,15 +25,22 @@
     </style>
 </head>
 
-<body>
-    <a href="articles" class="button">Articles</a><br>
-    <a href="services" class="button">Services</a><br>
-    <a href="doctors" class="button">Doctors</a><br>
-    <a href="transactions" class="button">Transactions</a><br>
-    <a href="schedules" class="button">Schedules</a><br>
-    <a href="bookings" class="button">Booking</a><br>
-    <a href="users" class="button">Users</a><br>
-    <a href="chats" class="button">Chats</a><br>
-</body>
+<body> -->
 
-</html><?php /**PATH C:\Users\CENT\Downloads\Imp\Ubaya\Tugas\Sem 6\Web Framework Programming\Project_WFP\resources\views/welcome.blade.php ENDPATH**/ ?>
+<?php $__env->startSection('content'); ?>
+    <div class="container"> 
+        <a href="articles" class="btn btn-primary">Articles</a><br>
+        <a href="services" class="btn btn-primary">Services</a><br>
+        <a href="doctors" class="btn btn-primary">Doctors</a><br>
+        <a href="transactions" class="btn btn-primary">Transactions</a><br>
+        <a href="schedules" class="btn btn-primary">Schedules</a><br>
+        <a href="bookings" class="btn btn-primary">Booking</a><br>
+        <a href="users" class="btn btn-primary">Users</a><br>
+        <a href="chats" class="btn btn-primary">Chats</a><br>
+    </div>
+
+    <!-- </body>
+
+        </html> -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("layouts.adminlte4", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\CENT\Downloads\Imp\Ubaya\Tugas\Sem 6\Web Framework Programming\Project_WFP\resources\views/welcome.blade.php ENDPATH**/ ?>

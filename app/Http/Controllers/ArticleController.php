@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -13,7 +15,8 @@ class ArticleController extends Controller
     public function index()
     {
         $allArticles = Article::with('doctor')->get();
-        return view('articles.index', ['articles' => $allArticles]);
+        $doctors = Doctor::all();
+        return view('articles.index', ['articles' => $allArticles, 'doctors' => $doctors]);
     }
 
     /**
@@ -29,7 +32,14 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = new Article();
+        $article->title = $request->get('title');
+        $article->article = $request->get('article');
+        $article->date_published = $request->get('date');
+        $article->doctor_id = $request->get('doctor_id');
+        $article->save();
+
+        return redirect()->route('articles.index')->with('success', 'Article created successfully.');
     }
 
     /**
@@ -53,7 +63,13 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $article->title = $request->get('title');
+        $article->article = $request->get('article');
+        $article->date_published = $request->get('date');
+        $article->doctor_id = $request->get('doctor_id');
+        $article->save();
+
+        return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
     }
 
     /**
@@ -61,6 +77,58 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $this->authorize('delete-permission', Auth::user());
+
+        try {
+            $article->delete();
+            return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
+        } catch (\PDOException $ex) {
+            $msg = "Make sure there is no related data before deleting it. Please contact Administrator to know more about it.";
+            return redirect()->route('articles.index')->with('status', $msg);
+        }
+    }
+
+    public function getEditForm(Request $request)
+    {
+        $id = $request->id;
+        $data = Article::find($id);
+        $doctors = Doctor::all();
+        return response()->json([
+            'status' => 'oke',
+            'msg' => view('articles.getEditForm', compact('data', 'doctors'))->render()
+        ], 200);
+    }
+
+    public function saveDataUpdate(Request $request)
+    {
+        $id = $request->id;
+        $data = Article::find($id);
+        $data->title = $request->title;
+        $data->article = $request->article;
+        $data->date_published = $request->date_published;
+        $data->doctor_id = $request->doctor_id;
+        $data->save();
+        return response()->json(['status' => 'oke', 'msg' => 'Article data is up-to-date!'], 200);
+    }
+
+    public function deleteData(Request $request)
+    {
+        $this->authorize('delete-permission', Auth::user());
+
+        $id = $request->id;
+        $data = Article::find($id);
+
+        try {
+            $data->delete();
+            return response()->json([
+                'status' => 'oke',
+                'msg' => 'Service <b>' . $data->title . '</b> berhasil dihapus!'
+            ], 200);
+        } catch (\PDOException $ex) {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'Gagal menghapus! Pastikan tidak ada data terkait sebelum menghapus article ini.'
+            ], 200);
+        }
     }
 }

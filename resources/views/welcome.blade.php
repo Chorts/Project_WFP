@@ -28,15 +28,18 @@
 <body> -->
 @extends("layouts.adminlte4")
 @section('content')
-    <a href="articles" class="btn">Articles</a><br>
-    <a href="services" class="btn btn-primary">Services</a><br>
-    <a href="doctors" class="btn btn-primary">Doctors</a><br>
-    <a href="transactions" class="btn btn-primary">Transactions</a><br>
-    <a href="schedules" class="btn btn-primary">Schedules</a><br>
-    <a href="bookings" class="btn btn-primary">Booking</a><br>
-    <a href="users" class="btn btn-primary">Users</a><br>
-    <a href="chats" class="btn btn-primary">Chats</a><br>
+    <div class="container"> 
+        <a href="articles" class="btn btn-primary">Articles</a><br>
+        <a href="services" class="btn btn-primary">Services</a><br>
+        <a href="doctors" class="btn btn-primary">Doctors</a><br>
+        <a href="transactions" class="btn btn-primary">Transactions</a><br>
+        <a href="schedules" class="btn btn-primary">Schedules</a><br>
+        <a href="bookings" class="btn btn-primary">Booking</a><br>
+        <a href="users" class="btn btn-primary">Users</a><br>
+        <a href="chats" class="btn btn-primary">Chats</a><br>
+    </div>
+
     <!-- </body>
 
-    </html> -->
+        </html> -->
 @endsection

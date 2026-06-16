@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\DoctorSchedule;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorScheduleController extends Controller
 {
@@ -12,8 +14,10 @@ class DoctorScheduleController extends Controller
      */
     public function index()
     {
-        $allDoctorSchedules = DoctorSchedule::with('doctor')->get();
-        return view('schedules.index', ['schedules' => $allDoctorSchedules]);
+        $allSchedules = DoctorSchedule::with('doctor')->get();
+        $doctors = Doctor::all();
+
+        return view('schedules.index', ['schedules' => $allSchedules, 'doctors' => $doctors,]);
     }
 
     /**
@@ -29,7 +33,14 @@ class DoctorScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $schedule = new DoctorSchedule();
+        $schedule->doctor_id = $request->get('doctor_id');
+        $schedule->day = $request->get('day');
+        $schedule->start_time = $request->get('start_time');
+        $schedule->end_time = $request->get('end_time');
+        $schedule->save();
+
+        return redirect()->route('schedules.index')->with('success', 'Schedule created successfully.');
     }
 
     /**
@@ -62,5 +73,54 @@ class DoctorScheduleController extends Controller
     public function destroy(DoctorSchedule $doctorSchedule)
     {
         //
+    }
+
+    public function getEditForm(Request $request)
+    {
+        $id = $request->id;
+        $data = DoctorSchedule::find($id);
+        $doctors = Doctor::all();
+
+        return response()->json([
+            'status' => 'oke',
+            'msg' => view('schedules.getEditForm', compact('data', 'doctors'))->render()
+        ], 200);
+    }
+
+    public function saveDataUpdate(Request $request)
+    {
+        $id = $request->id;
+        $data = DoctorSchedule::find($id);
+        $data->doctor_id = $request->doctor_id;
+        $data->day = $request->day;
+        $data->start_time = $request->start_time;
+        $data->end_time = $request->end_time;
+        $data->save();
+
+        return response()->json([
+            'status' => 'oke',
+            'msg' => 'Schedule data is up-to-date!'
+        ], 200);
+    }
+
+    public function deleteData(Request $request)
+    {
+        $this->authorize('delete-permission', Auth::user());
+
+        $id = $request->id;
+        $data = DoctorSchedule::find($id);
+
+        try {
+            $data->delete();
+            return response()->json([
+                'status' => 'oke',
+                'msg' => 'Schedule berhasil dihapus!'
+            ], 200);
+        } catch (\PDOException $ex) {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'Gagal menghapus! Pastikan tidak ada data terkait sebelum menghapus schedule ini.'
+            ], 200);
+        }
     }
 }

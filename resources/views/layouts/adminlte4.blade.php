@@ -294,6 +294,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('categories.index')}}" class="nav-link @yield('sidebar-categories')">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('schedules.index')}}" class="nav-link @yield('sidebar-schedules')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Schedules</p>
