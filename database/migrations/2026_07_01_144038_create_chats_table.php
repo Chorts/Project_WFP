@@ -13,8 +13,11 @@ return new class extends Migration {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('booking_id');
-            $table->foreign('booking_id')->references('id')->on('bookings');
+            // $table->unsignedBigInteger('booking_id');
+            // $table->foreign('booking_id')->references('id')->on('bookings');
+
+            $table->foreignId('consultation_id')
+                ->constrained('consultations');
 
             $table->unsignedBigInteger('sender_id');
 

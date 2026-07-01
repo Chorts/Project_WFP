@@ -252,55 +252,50 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{route('services.index')}}" class="nav-link @yield('sidebar-services')">
+                            <a href="{{route('admin.services.index')}}" class="nav-link @yield('sidebar-services')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Services</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('doctors') }}" class="nav-link @yield('sidebar-doctors')">
+                            <a href="{{ route('admin.doctors.index') }}" class="nav-link @yield('sidebar-doctors')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Doctors</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('transactions') }}" class="nav-link @yield('sidebar-transactions')">
+                            <a href="{{ route('admin.transactions.index') }}" class="nav-link @yield('sidebar-transactions')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Transactions</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('articles') }}" class="nav-link @yield('sidebar-articles')">
+                            <a href="{{ route('admin.articles.index') }}" class="nav-link @yield('sidebar-articles')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Articles</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('bookings.index')}}" class="nav-link @yield('sidebar-bookings')">
+                            <a href="{{route('admin.bookings.index')}}" class="nav-link @yield('sidebar-bookings')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Bookings</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('users.index')}}" class="nav-link @yield('sidebar-users')">
+                            <a href="{{route('admin.users.index')}}" class="nav-link @yield('sidebar-users')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Users</p>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="{{route('chats.index')}}" class="nav-link @yield('sidebar-chats')">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Chats</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('categories.index')}}" class="nav-link @yield('sidebar-categories')">
+                            <a href="{{route('admin.categories.index')}}" class="nav-link @yield('sidebar-categories')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Categories</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('schedules.index')}}" class="nav-link @yield('sidebar-schedules')">
+                            <a href="{{route('admin.schedules.index')}}" class="nav-link @yield('sidebar-schedules')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Schedules</p>
                             </a>
@@ -770,7 +765,7 @@
             scrollbarAutoHide: 'leave',
             scrollbarClickScroll: true,
         };
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
             if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
                 OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
@@ -813,8 +808,7 @@
         // ++++++++++++++++++++++++++++++++++++++++++
 
         const sales_chart_options = {
-            series: [
-                {
+            series: [{
                     name: 'Digital Goods',
                     data: [28, 48, 40, 19, 86, 27, 90],
                 },
@@ -894,11 +888,9 @@
 
         // Sparkline charts
         const option_sparkline1 = {
-            series: [
-                {
-                    data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
-                },
-            ],
+            series: [{
+                data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
+            }, ],
             chart: {
                 type: 'area',
                 height: 50,
@@ -922,11 +914,9 @@
         sparkline1.render();
 
         const option_sparkline2 = {
-            series: [
-                {
-                    data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
-                },
-            ],
+            series: [{
+                data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
+            }, ],
             chart: {
                 type: 'area',
                 height: 50,
@@ -950,11 +940,9 @@
         sparkline2.render();
 
         const option_sparkline3 = {
-            series: [
-                {
-                    data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
-                },
-            ],
+            series: [{
+                data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
+            }, ],
             chart: {
                 type: 'area',
                 height: 50,

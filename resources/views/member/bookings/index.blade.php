@@ -1,0 +1,61 @@
+@extends('layouts.member')
+
+@section('title', 'Booking Saya')
+@section('nav-bookings', 'active')
+
+@section('content')
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Booking Konsultasi Saya</h2>
+
+        <a href="{{ route('member.bookings.create') }}" class="btn btn-primary">
+            Booking Baru
+        </a>
+    </div>
+
+    @if($bookings->isEmpty())
+
+    <div class="alert alert-info">
+        Anda belum memiliki booking konsultasi.
+    </div>
+
+    @else
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Dokter</th>
+                <th>Layanan</th>
+                <th>Tanggal Booking</th>
+                <th>Status</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach($bookings as $booking)
+            <tr>
+                <td>{{ $booking->schedule->doctor->name ?? '-' }}</td>
+
+                <td>{{ $booking->service->service_name ?? '-' }}</td>
+
+                <td>
+                    {{ $booking->booking_date }}
+                </td>
+
+                <td>
+                    {{ $booking->status ?? 'Menunggu' }}
+                </td>
+
+
+            </tr>
+            @endforeach
+        </tbody>
+
+    </table>
+
+    @endif
+
+</div>
+@endsection

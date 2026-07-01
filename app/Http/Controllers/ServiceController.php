@@ -16,7 +16,7 @@ class ServiceController extends Controller
     {
         $services = Service::with('category')->get();
         $categories = Category::all();
-        return view('services.index', compact('services', 'categories'));
+        return view('admin.services.index', compact('services', 'categories'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ServiceController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('services.create', compact('categories'));
+        return view('admin.services.create', compact('categories'));
     }
 
     /**
@@ -41,7 +41,7 @@ class ServiceController extends Controller
         $service->tipe_service = $request->get('tipe_service');
         $service->save();
 
-        return redirect()->route('services.index')->with('success', 'Service created successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service created successfully.');
     }
 
     /**
@@ -58,7 +58,7 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         $categories = Category::all();
-        return view('services.edit', compact('service', 'categories'));
+        return view('admin.services.edit', compact('service', 'categories'));
     }
 
     /**
@@ -73,7 +73,7 @@ class ServiceController extends Controller
         $service->tipe_service = $request->get('tipe_service');
         $service->save();
 
-        return redirect()->route('services.index')->with('success', 'Service updated successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service updated successfully.');
     }
 
     /**
@@ -85,10 +85,10 @@ class ServiceController extends Controller
 
         try {
             $service->delete();
-            return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
+            return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
         } catch (\PDOException $ex) {
             $msg = "Make sure there is no related data before deleting it. Please contact Administrator to know more about it.";
-            return redirect()->route('services.index')->with('status', $msg);
+            return redirect()->route('admin.services.index')->with('status', $msg);
         }
     }
 
@@ -100,7 +100,7 @@ class ServiceController extends Controller
         $categories = Category::all();
         return response()->json([
             'status' => 'oke',
-            'msg' => view('services.getEditForm', compact('data', 'categories'))->render()
+            'msg' => view('admin.services.getEditForm', compact('data', 'categories'))->render()
         ], 200);
     }
 
@@ -112,7 +112,7 @@ class ServiceController extends Controller
         $categories = Category::all();
         return response()->json([
             'status' => 'oke',
-            'msg' => view('services.getEditFormB', compact('data', 'categories'))->render()
+            'msg' => view('admin.services.getEditFormB', compact('data', 'categories'))->render()
         ], 200);
     }
 

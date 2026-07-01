@@ -17,37 +17,70 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $allBookings = Booking::with(['user','doctor','service','schedule'])->get();
+        $allBookings = Booking::with(['user', 'doctor', 'service', 'schedule'])->get();
         $users = User::all();
         $doctors = Doctor::all();
         $services = Service::all();
         $schedules = DoctorSchedule::all();
-        return view('bookings.index', ['bookings' => $allBookings, 'users' => $users,
-            'doctors' => $doctors, 'services' => $services, 'schedules' => $schedules,]);
+        return view('bookings.index', [
+            'bookings' => $allBookings,
+            'users' => $users,
+            'doctors' => $doctors,
+            'services' => $services,
+            'schedules' => $schedules,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function adminIndex()
+    {
+        $bookings = Booking::with(['doctor', 'member'])->get();
+        return view('admin.bookings.index', compact('bookings'));
+    }
+
+    public function adminShow($id)
+    {
+        $booking = Booking::with(['doctor', 'member'])->find($id);
+        return view('admin.bookings.show', compact('booking'));
+    }
+
+    public function doctorIndex()
+    {
+        $bookings = Booking::with("user", "service", "schedule.doctor")
+            ->whereHas("schedule", function ($query) {
+                $query->where("doctor_id", auth()->user()->doctor->id);
+            })
+            ->get();
+
+        return view('doctor.bookings.index', compact('bookings'));
+    }
+
+    public function memberIndex()
+    {
+        $bookings = Booking::where('user_id', auth()->id())->with(['schedule.doctor'])->get();
+        return view('member.bookings.index', compact('bookings'));
+    }
+
+
     public function create()
     {
-        //
+        $doctors = Doctor::all();
+        $services = Service::all();
+        $schedules = DoctorSchedule::with('doctor')->get();
+        return view("member.bookings.create", compact("doctors", "services", "schedules"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $booking = new Booking();
-        $booking->user_id = $request->get('user_id');
+        $booking->user_id = auth()->id();
         $booking->service_id = $request->get('service_id');
         $booking->schedule_id = $request->get('schedule_id');
-        $booking->status = $request->get('status');
+        $booking->status = "Dipesan";
         $booking->booking_date = $request->get('booking_date');
         $booking->save();
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('member.bookings.index')
             ->with('success', 'Booking created successfully.');
     }
 
@@ -78,10 +111,7 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Booking $booking)
-    {
-
-    }
+    public function destroy(Booking $booking) {}
 
     public function getEditForm(Request $request)
     {

@@ -17,7 +17,7 @@ class DoctorScheduleController extends Controller
         $allSchedules = DoctorSchedule::with('doctor')->get();
         $doctors = Doctor::all();
 
-        return view('schedules.index', ['schedules' => $allSchedules, 'doctors' => $doctors,]);
+        return view('admin.schedules.index', ['schedules' => $allSchedules, 'doctors' => $doctors,]);
     }
 
     /**

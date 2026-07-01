@@ -14,9 +14,33 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+
         $allArticles = Article::with('doctor')->get();
         $doctors = Doctor::all();
         return view('articles.index', ['articles' => $allArticles, 'doctors' => $doctors]);
+    }
+
+    public function publicIndex(Request $request)
+    {
+        $query = Article::with('doctor');
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $articles = $query->latest('date_published')->get();
+
+        return view('member.articles.index', compact('articles'));
+    }
+
+    public function publicShow($id)
+    {
+        $article = Article::with('doctor')->find($id);
+
+
+
+        return view('member.articles.show', compact('article'));
     }
 
     /**
@@ -39,7 +63,7 @@ class ArticleController extends Controller
         $article->doctor_id = $request->get('doctor_id');
         $article->save();
 
-        return redirect()->route('articles.index')->with('success', 'Article created successfully.');
+        return redirect()->route('admin.articles.index')->with('success', 'Article created successfully.');
     }
 
     /**
@@ -69,7 +93,7 @@ class ArticleController extends Controller
         $article->doctor_id = $request->get('doctor_id');
         $article->save();
 
-        return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
+        return redirect()->route('admin.articles.index')->with('success', 'Article updated successfully.');
     }
 
     /**
@@ -81,10 +105,10 @@ class ArticleController extends Controller
 
         try {
             $article->delete();
-            return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
+            return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully.');
         } catch (\PDOException $ex) {
             $msg = "Make sure there is no related data before deleting it. Please contact Administrator to know more about it.";
-            return redirect()->route('articles.index')->with('status', $msg);
+            return redirect()->route('admin.articles.index')->with('status', $msg);
         }
     }
 

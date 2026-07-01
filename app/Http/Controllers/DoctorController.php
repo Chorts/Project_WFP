@@ -21,6 +21,26 @@ class DoctorController extends Controller
         return view('doctors.index', ['doctors' => $allDoctors, 'specializations' => $specializations, 'users' => $users]);
     }
 
+    public function publicIndex(Request $request)
+    {
+        $query = Doctor::with('specialization');
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $doctors = $query->get();
+
+        return view('member.doctors.index', compact('doctors'));
+    }
+
+    public function publicShow($id)
+    {
+        $doctor = Doctor::with('specialization')->find($id);
+
+        return view('member.doctors.show', compact('doctor'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

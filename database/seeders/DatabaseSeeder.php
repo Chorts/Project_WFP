@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             BookingSeeder::class,
             TransactionSeeder::class,
+            ConsultationSeeder::class,
             ChatSeeder::class,
         ]);
     }
