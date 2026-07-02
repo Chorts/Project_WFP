@@ -74,7 +74,7 @@ Doctors
 {{-- Modal Create --}}
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ url('/doctors') }}">
+        <form method="POST" action="{{ route('admin.doctors.store') }}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Doctor</h4>
@@ -138,7 +138,7 @@ Doctors
     function getEditForm(id) {
         $.ajax({
             type: 'POST',
-            url: '{{ route("doctors.getEditForm") }}',
+            url: '{{ route("admin.doctors.getEditForm") }}',
             data: {
                 '_token': '<?php echo csrf_token(); ?>',
                 'id': id
@@ -157,7 +157,7 @@ Doctors
 
         $.ajax({
             type: 'POST',
-            url: '{{ route("doctors.saveDataUpdate") }}',
+            url: '{{ route("admin.doctors.saveDataUpdate") }}',
             data: {
                 '_token': '<?php echo csrf_token(); ?>',
                 'id': id,
@@ -165,7 +165,6 @@ Doctors
                 'email': email,
                 'specialization_id': specialization_id,
                 'user_id': user_id,
-                s
             },
             success: function(data) {
                 if (data.status == "oke") {
@@ -182,7 +181,7 @@ Doctors
     function deleteDataRemove(id) {
         $.ajax({
             type: 'POST',
-            url: '{{ route("doctors.deleteData") }}',
+            url: '{{ route("admin.doctors.deleteData") }}',
             data: {
                 '_token': '<?php echo csrf_token(); ?>',
                 'id': id

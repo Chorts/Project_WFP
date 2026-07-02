@@ -18,7 +18,7 @@ class DoctorController extends Controller
         $allDoctors = Doctor::with('specialization')->get();
         $specializations = Specialization::all();
         $users = User::all();
-        return view('doctors.index', ['doctors' => $allDoctors, 'specializations' => $specializations, 'users' => $users]);
+        return view('admin.doctors.index', ['doctors' => $allDoctors, 'specializations' => $specializations, 'users' => $users]);
     }
 
     public function publicIndex(Request $request)
@@ -61,7 +61,7 @@ class DoctorController extends Controller
         $doctor->user_id = $request->get('user_id');
         $doctor->save();
 
-        return redirect()->route('doctors.index')->with('success', 'Doctor created successfully.');
+        return redirect()->route('admin.doctors.index')->with('success', 'Doctor created successfully.');
     }
 
     /**
@@ -85,7 +85,13 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        //
+        $doctor->name = $request->get('name');
+        $doctor->email = $request->get('email');
+        $doctor->specialization = $request->get('specialization');
+        $doctor->user_id = auth()->id();
+        $doctor->save();
+
+        return redirect()->route('admin.doctors.index')->with('success', 'Doctor updated successfully.');
     }
 
     /**
@@ -104,7 +110,7 @@ class DoctorController extends Controller
         $specializations = Specialization::all();
         return response()->json([
             'status' => 'oke',
-            'msg' => view('doctors.getEditForm', compact('data', 'users', 'specializations'))->render()
+            'msg' => view('admin.doctors.getEditForm', compact('data', 'users', 'specializations'))->render()
         ], 200);
     }
 
