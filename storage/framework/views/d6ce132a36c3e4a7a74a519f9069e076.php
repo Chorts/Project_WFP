@@ -15,16 +15,14 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--vg-bg);
 
-        }
+            /* margin-top: 25px; */
+            margin-bottom: 25px;
 
-        main {
-            min-height: 70vh;
-            padding-top: 2rem;
-            padding-bottom: 3rem;
+
         }
     </style>
 
-    <?php echo $__env->yieldPushContent('styles'); ?>
+
 </head>
 
 <body>
@@ -34,11 +32,11 @@
             <a style="color: #3F7F5E; font-weight: bold; font-size: 3vh;">
                 VitaGuard
             </a>
-            <button class=" navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#vgNavbar">
-                <span class="navbar-toggler-icon"></span>
+            <button class=" navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBurger">
+                <span class="navbar-w-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="vgNavbar">
+            <div class="collapse navbar-collapse" id="navbarBurger">
                 <ul class="navbar-nav me-auto ms-lg-4">
                     <li class="nav-item">
                         <a class="nav-link <?php echo $__env->yieldContent('nav-articles'); ?>" href="<?php echo e(route('member.articles.index')); ?>">Artikel</a>
@@ -86,26 +84,25 @@
     </nav>
 
 
-    <main>
-        <div class="container">
-            <?php if(session('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?php echo e(session('success')); ?>
+    <div class="container">
+        <?php if(session('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo e(session('success')); ?>
 
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php endif; ?>
-            <?php if(session('error')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?php echo e(session('error')); ?>
-
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php endif; ?>
-
-            <?php echo $__env->yieldContent('content'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    </main>
+        <?php endif; ?>
+        <?php if(session('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo e(session('error')); ?>
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php endif; ?>
+
+        <?php echo $__env->yieldContent('content'); ?>
+    </div>
+
 
 
 

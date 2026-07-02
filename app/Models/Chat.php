@@ -10,15 +10,15 @@ class Chat extends Model
     use HasFactory;
 
     protected $fillable = [
-        'booking_id',
+        'consultation_id',
         'sender_id',
         'tipe_sender',
         'chat',
     ];
 
-    public function booking()
+    public function consultation()
     {
-        return $this->belongsTo(Booking::class, 'booking_id');
+        return $this->belongsTo(Consultation::class, 'consultation_id');
     }
 
     public function sender()

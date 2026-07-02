@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Booking;
 use App\Models\User;
+use App\Models\Consultation;
 use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
@@ -22,6 +23,49 @@ class ChatController extends Controller
         return view('chats.index', ['chats' => $allChats, 'bookings' => $bookings, 'users' => $users,]);
     }
 
+    public function doctorChat(Request $request, string $id)
+    {
+        // $chats = Chat::where("sender_id", auth()->id())->where("status", "Aktif")->get();
+
+        // return view('member.chats.index', compact('chats'));
+
+        $consultation = Consultation::where("id", $id)->get();
+
+        $chat = new Chat();
+        $chat->consultation_id = $consultation->id;
+        $chat->sender_id = auth()->id();
+        $chat->tipe_sender = 'doctor';
+        $chat->chat = $request->get('chat');
+        $chat->save();
+
+        return redirect()->route('doctor.consultations.show', $consultation->id())->with('success', 'Pesan terkirim.');
+    }
+
+    public function close(string $id)
+    {
+        $consultation = Consultation::where("id", $id)->where("doctor_id", auth()->id())->first();
+
+        $consultation::update("status", "Selesai");
+        $consultation::update("ended_at", now());
+
+        return redirect()->route('doctor.consultations.index')->with('success', 'Konsultasi ditutup.');
+    }
+
+    public function memberChat(Request $request, string $id)
+    {
+        $consultation = Consultation::where("id", $id)->first();
+
+        $chat = new Chat();
+        $chat->consultation_id = $consultation->id;
+        $chat->sender_id = auth()->id();
+        $chat->tipe_sender = 'user';
+        $chat->chat = $request->get('chat');
+        $chat->save();
+
+        return redirect()->route('member.consultations.show', $consultation->id)->with('success', 'Pesan terkirim.');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -36,7 +80,7 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $chat = new Chat();
-        $chat->booking_id = $request->get('booking_id');
+        $chat->consultation_id = $request->get('consultation_id');
         $chat->sender_id = $request->get('sender_id');
         $chat->tipe_sender = $request->get('tipe_sender');
         $chat->chat = $request->get('chat');

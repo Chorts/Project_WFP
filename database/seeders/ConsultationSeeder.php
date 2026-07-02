@@ -16,7 +16,7 @@ class ConsultationSeeder extends Seeder
             [
                 'booking_id' => 1,
                 'doctor_id' => 1,
-                'member_id' => 3,
+                'user_id' => 3,
                 'status' => 'Selesai',
 
                 'started_at' => now()->subDays(5),
@@ -27,7 +27,7 @@ class ConsultationSeeder extends Seeder
             [
                 'booking_id' => 2,
                 'doctor_id' => 2,
-                'member_id' => 7,
+                'user_id' => 7,
                 'status' => 'Selesai',
 
                 'started_at' => now()->subDays(3),
@@ -38,7 +38,7 @@ class ConsultationSeeder extends Seeder
             [
                 'booking_id' => 3,
                 'doctor_id' => 3,
-                'member_id' => 8,
+                'user_id' => 8,
                 'status' => 'Aktif',
 
                 'started_at' => now()->subHours(2),
@@ -49,7 +49,7 @@ class ConsultationSeeder extends Seeder
             [
                 'booking_id' => 4,
                 'doctor_id' => 1,
-                'member_id' => 3,
+                'user_id' => 3,
                 'status' => 'Aktif',
 
                 'started_at' => now()->subMinutes(30),

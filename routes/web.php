@@ -12,6 +12,7 @@ use App\Http\Controllers\DoctorScheduleController;
 use App\Http\Controllers\ConsultationHistoryController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\DoctorProfileController;
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +50,9 @@ Route::middleware(['auth', 'can:access-admin'])
 
         Route::get('bookings', [BookingController::class, 'adminIndex'])->name('bookings.index');
         Route::get('bookings/{id}', [BookingController::class, 'adminShow'])->name('bookings.show');
+
+        Route::get('consultations', [ConsultationController::class, 'adminIndex'])->name('consultations.index');
+        Route::get('consultations/{id}', [ConsultationController::class, 'adminShow'])->name('consultations.show');
 
         // AJAX (khusus admin, karena hanya admin yang boleh edit/hapus data master)
         Route::post('ajax/services/getEditForm', [ServiceController::class, 'getEditForm'])->name('services.getEditForm');
@@ -92,11 +96,12 @@ Route::middleware(['auth', 'can:access-doctor'])
 
         Route::get('bookings', [BookingController::class, 'doctorIndex'])->name('bookings.index');
 
-        Route::get('consultations', [ChatController::class, 'doctorIndex'])->name('consultations.index');
-        Route::post('consultations/{id}/reply', [ChatController::class, 'reply'])->name('consultations.reply');
+        Route::get('consultations', [ConsultationController::class, 'doctorIndex'])->name('consultations.index');
+        Route::get('consultations/{id}', [ConsultationController::class, 'doctorShow'])->name('consultations.show');
+        Route::post('consultations/{id}/message', [ChatController::class, 'doctorChat'])->name('consultations.doctorChat');
         Route::post('consultations/{id}/close', [ChatController::class, 'close'])->name('consultations.close');
 
-        Route::get('history', [ConsultationHistoryController::class, 'doctorIndex'])->name('history.index');
+        Route::get('history', [ConsultationController::class, 'doctorHistory'])->name('history.index');
     });
 
 Route::middleware(['auth', 'can:access-member'])
@@ -113,8 +118,9 @@ Route::middleware(['auth', 'can:access-member'])
         Route::get('bookings/create', [BookingController::class, 'create'])->name('bookings.create');
         Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
 
-        Route::get('consultations', [ChatController::class, 'memberIndex'])->name('consultations.index');
-        Route::post('consultations/{id}/message', [ChatController::class, 'sendMessage'])->name('consultations.message');
+        Route::get('consultations', [ConsultationController::class, 'memberIndex'])->name('consultations.index');
+        Route::get('consultations/{id}', [ConsultationController::class, 'memberShow'])->name('consultations.show');
+        Route::post('consultations/{id}/message', [ChatController::class, 'memberChat'])->name('consultations.memberChat');
 
-        Route::get('history', [ConsultationHistoryController::class, 'memberIndex'])->name('history.index');
+        Route::get('history', [ConsultationController::class, 'memberHistory'])->name('history.index');
     });

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('doctor_id')
                 ->constrained('doctors');
 
-            $table->foreignId('member_id')
+            $table->foreignId('user_id')
                 ->constrained('users');
 
             $table->enum('status', [
