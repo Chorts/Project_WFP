@@ -50,12 +50,10 @@ Doctors
                     {{ $doctor->specialization->name }}
                 </td>
                 <td>
-                    <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                        onclick="getEditForm({{ $doctor->id }})">Edit</a>
+                    <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"onclick="getEditForm({{ $doctor->id }})">Edit</a>
 
                     @can('delete-permission', Auth::user())
-                    <a href="#" class="btn btn-danger btn-sm"
-                        onclick="if(confirm('Are you sure to delete {{ $doctor->id }} - {{ $doctor->name }}?')) deleteDataRemove({{ $doctor->id }})">
+                    <a href="#" class="btn btn-danger btn-sm"onclick="if(confirm('Are you sure to delete {{ $doctor->id }} - {{ $doctor->name }}?')) deleteDataRemove({{ $doctor->id }})">
                         Delete
                     </a>
                     @endcan

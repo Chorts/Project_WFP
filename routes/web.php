@@ -51,6 +51,9 @@ Route::middleware(['auth', 'can:access-admin'])
         Route::get('bookings', [BookingController::class, 'adminIndex'])->name('bookings.index');
         Route::get('bookings/{id}', [BookingController::class, 'adminShow'])->name('bookings.show');
 
+        Route::get('articles', [ArticleController::class, 'adminIndex'])->name('articles.index');
+        Route::get('articles/{id}', [ArticleController::class, 'adminShow'])->name('articles.show');
+
         Route::get('consultations', [ConsultationController::class, 'adminIndex'])->name('consultations.index');
         Route::get('consultations/{id}', [ConsultationController::class, 'adminShow'])->name('consultations.show');
 
@@ -108,8 +111,8 @@ Route::middleware(['auth', 'can:access-member'])
     ->prefix('member')
     ->name('member.')
     ->group(function () {
-        Route::get('articles', [ArticleController::class, 'publicIndex'])->name('articles.index');
-        Route::get('articles/{id}', [ArticleController::class, 'publicShow'])->name('articles.show');
+        Route::get('articles', [ArticleController::class, 'memberIndex'])->name('articles.index');
+        Route::get('articles/{id}', [ArticleController::class, 'memberShow'])->name('articles.show');
 
         Route::get('doctors', [DoctorController::class, 'publicIndex'])->name('doctors.index');
         Route::get('doctors/{id}', [DoctorController::class, 'publicShow'])->name('doctors.show');

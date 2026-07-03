@@ -31,17 +31,17 @@ class BookingController extends Controller
         ]);
     }
 
-    public function adminIndex()
-    {
-        $bookings = Booking::with(['doctor', 'member'])->get();
-        return view('admin.bookings.index', compact('bookings'));
-    }
+    // public function adminIndex()
+    // {
+    //     $bookings = Booking::with(['doctor', 'member'])->get();
+    //     return view('admin.bookings.index', compact('bookings'));
+    // }
 
-    public function adminShow($id)
-    {
-        $booking = Booking::with(['doctor', 'member'])->find($id);
-        return view('admin.bookings.show', compact('booking'));
-    }
+    // public function adminShow($id)
+    // {
+    //     $booking = Booking::with(['doctor', 'member'])->find($id);
+    //     return view('admin.bookings.show', compact('booking'));
+    // }
 
     public function doctorIndex()
     {

@@ -12,16 +12,16 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function adminIndex()
     {
         $user = auth()->user();
 
         $allArticles = Article::with('doctor')->get();
         $doctors = Doctor::all();
-        return view('articles.index', ['articles' => $allArticles, 'doctors' => $doctors]);
+        return view('admin.articles.index', ['articles' => $allArticles, 'doctors' => $doctors]);
     }
 
-    public function publicIndex(Request $request)
+    public function memberIndex(Request $request)
     {
         $query = Article::with('doctor');
 
@@ -34,11 +34,9 @@ class ArticleController extends Controller
         return view('member.articles.index', compact('articles'));
     }
 
-    public function publicShow($id)
+    public function memberShow($id)
     {
         $article = Article::with('doctor')->find($id);
-
-
 
         return view('member.articles.show', compact('article'));
     }
@@ -119,7 +117,7 @@ class ArticleController extends Controller
         $doctors = Doctor::all();
         return response()->json([
             'status' => 'oke',
-            'msg' => view('articles.getEditForm', compact('data', 'doctors'))->render()
+            'msg' => view('admin.articles.getEditForm', compact('data', 'doctors'))->render()
         ], 200);
     }
 

@@ -49,12 +49,10 @@
                         <td id="td_date_{{ $article->id }}">{{ $article->date_published }}</td>
                         <td id="td_doctor_{{ $article->id }}">{{ $article->doctor->id }} - {{ $article->doctor->name }}</td>
                         <td>
-                            <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                onclick="getEditForm({{ $article->id }})">Edit</a>
+                            <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"onclick="getEditForm({{ $article->id }})">Edit</a>
 
                             @can('delete-permission', Auth::user())
-                                <a href="#" class="btn btn-danger btn-sm"
-                                    onclick="if(confirm('Are you sure to delete {{ $article->id }} - {{ $article->title }}?')) deleteDataRemove({{ $article->id }})">
+                                <a href="#" class="btn btn-danger btn-sm"onclick="if(confirm('Are you sure to delete {{ $article->id }} - {{ $article->title }}?')) deleteDataRemove({{ $article->id }})">
                                     Delete
                                 </a>
                             @endcan
@@ -73,7 +71,7 @@
     {{-- Modal Create --}}
     <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ url('/articles') }}">
+            <form method="POST" action="{{ route('admin.articles.store') }}">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Article</h4>
@@ -133,7 +131,7 @@
         function getEditForm(id) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route("articles.getEditForm") }}',
+                url: '{{ route("admin.articles.getEditForm") }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id
@@ -152,7 +150,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route("articles.saveDataUpdate") }}',
+                url: '{{ route("admin.articles.saveDataUpdate") }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id,
@@ -176,7 +174,7 @@
         function deleteDataRemove(id) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route("articles.deleteData") }}',
+                url: '{{ route("admin.articles.deleteData") }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id
