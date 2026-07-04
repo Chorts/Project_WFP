@@ -251,24 +251,14 @@
                     <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item">
-                            <a href="<?php echo e(route('admin.services.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-services'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Services</p>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a href="<?php echo e(route('admin.doctors.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Doctors</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?php echo e(route('admin.transactions.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-transactions'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Transactions</p>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a href="<?php echo e(route('admin.articles.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-articles'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -288,12 +278,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="<?php echo e(route('admin.categories.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-categories'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a href="<?php echo e(route('admin.schedules.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-schedules'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>

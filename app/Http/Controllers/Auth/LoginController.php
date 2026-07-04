@@ -43,7 +43,7 @@ class LoginController extends Controller
     {
         switch ($user->role) {
             case 'admin':
-                return redirect()->route('admin.services.index');
+                return redirect()->route('admin.doctors.index');
             case 'doctor':
                 return redirect()->route('doctor.bookings.index');
             case 'member':

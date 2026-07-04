@@ -37,7 +37,7 @@ class UserController extends Controller
         $user->role = $request->get('role');
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('adamin.users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -79,7 +79,7 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 'oke',
-            'msg' => view('users.getEditForm', compact('data'))->render()
+            'msg' => view('admin.users.getEditForm', compact('data'))->render()
         ], 200);
     }
 

@@ -20,32 +20,35 @@ class BookingController extends Controller
         $allBookings = Booking::with(['user', 'doctor', 'service', 'schedule'])->get();
         $users = User::all();
         $doctors = Doctor::all();
-        $services = Service::all();
+
         $schedules = DoctorSchedule::all();
         return view('bookings.index', [
             'bookings' => $allBookings,
             'users' => $users,
             'doctors' => $doctors,
-            'services' => $services,
+
             'schedules' => $schedules,
         ]);
     }
 
-    // public function adminIndex()
-    // {
-    //     $bookings = Booking::with(['doctor', 'member'])->get();
-    //     return view('admin.bookings.index', compact('bookings'));
-    // }
+    public function adminIndex()
+    {
+        $users = User::all();
+        $schedules = DoctorSchedule::with('doctor')->get();
+        $bookings = Booking::with(['user', 'schedule.doctor'])->get();
 
-    // public function adminShow($id)
-    // {
-    //     $booking = Booking::with(['doctor', 'member'])->find($id);
-    //     return view('admin.bookings.show', compact('booking'));
-    // }
+        return view('admin.bookings.index', compact('bookings', 'users', 'schedules'));
+    }
+
+    public function adminShow($id)
+    {
+        $booking = Booking::with(['doctor', 'member'])->find($id);
+        return view('admin.bookings.show', compact('booking'));
+    }
 
     public function doctorIndex()
     {
-        $bookings = Booking::with("user", "service", "schedule.doctor")
+        $bookings = Booking::with("user", "schedule.doctor")
             ->whereHas("schedule", function ($query) {
                 $query->where("doctor_id", auth()->user()->doctor->id);
             })
@@ -64,17 +67,28 @@ class BookingController extends Controller
     public function create()
     {
         $doctors = Doctor::all();
-        $services = Service::all();
         $schedules = DoctorSchedule::with('doctor')->get();
-        return view("member.bookings.create", compact("doctors", "services", "schedules"));
+        return view("member.bookings.create", compact("doctors", "schedules"));
     }
 
 
-    public function store(Request $request)
+    public function adminStore(Request $request)
+    {
+        $booking = new Booking();
+        $booking->user_id = $request->get('user_id');
+        $booking->schedule_id = $request->get('schedule_id');
+        $booking->status = "Dipesan";
+        $booking->booking_date = $request->get('booking_date');
+        $booking->save();
+
+        return redirect()->route('admin.bookings.index')
+            ->with('success', 'Booking created successfully.');
+    }
+
+    public function memberStore(Request $request)
     {
         $booking = new Booking();
         $booking->user_id = auth()->id();
-        $booking->service_id = $request->get('service_id');
         $booking->schedule_id = $request->get('schedule_id');
         $booking->status = "Dipesan";
         $booking->booking_date = $request->get('booking_date');
@@ -119,12 +133,11 @@ class BookingController extends Controller
         $data = Booking::find($id);
         $users = User::all();
         $doctors = Doctor::all();
-        $services = Service::all();
         $schedules = DoctorSchedule::all();
 
         return response()->json([
             'status' => 'oke',
-            'msg' => view('bookings.getEditForm', compact('data', 'users', 'doctors', 'services', 'schedules'))->render()
+            'msg' => view('admin.bookings.getEditForm', compact('data', 'users', 'doctors', 'schedules'))->render()
         ], 200);
     }
 
@@ -133,7 +146,6 @@ class BookingController extends Controller
         $id = $request->id;
         $booking = Booking::find($id);
         $booking->user_id = $request->get('user_id');
-        $booking->service_id = $request->get('service_id');
         $booking->schedule_id = $request->get('schedule_id');
         $booking->status = $request->get('status');
         $booking->booking_date = $request->get('booking_date');

@@ -18,14 +18,11 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         $this->call([
             UserSeeder::class,
-            CategoriesSeeder::class,
             SpecializationSeeder::class,
-            ServiceSeeder::class,
             DoctorSeeder::class,
             DoctorScheduleSeeder::class,
             ArticleSeeder::class,
             BookingSeeder::class,
-            TransactionSeeder::class,
             ConsultationSeeder::class,
             ChatSeeder::class,
         ]);

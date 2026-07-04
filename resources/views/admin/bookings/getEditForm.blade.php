@@ -7,31 +7,22 @@
     <label>Patient</label>
     <select class="form-control" id="user_id">
         @foreach ($users as $user)
-            <option value="{{ $user->id }}" {{ $data->user_id == $user->id ? 'selected' : '' }}>
-                {{ $user->name }}
-            </option>
+        <option value="{{ $user->id }}" {{ $data->user_id == $user->id ? 'selected' : '' }}>
+            {{ $user->name }}
+        </option>
         @endforeach
     </select>
 </div>
-<div class="form-group mb-2">
-    <label>Service</label>
-    <select class="form-control" id="service_id">
-        @foreach ($services as $service)
-            <option value="{{ $service->id }}" {{ $data->service_id == $service->id ? 'selected' : '' }}>
-                {{ $service->service_name }}
-            </option>
-        @endforeach
-    </select>
-</div>
+
 <div class="form-group mb-2">
     <label>Schedule</label>
     <select class="form-control" id="schedule_id">
         @foreach ($schedules as $schedule)
-            <option value="{{ $schedule->id }}" data-doctor="{{ $schedule->doctor->name }}" data-day="{{ $schedule->day }}"
-                data-time="{{ $schedule->start_time }} - {{ $schedule->end_time }}" {{ $data->schedule_id == $schedule->id ? 'selected' : '' }}>
-                {{ $schedule->doctor->name }} - {{ $schedule->day }} - {{ $schedule->start_time }} -
-                {{ $schedule->end_time }}
-            </option>
+        <option value="{{ $schedule->id }}" data-doctor="{{ $schedule->doctor->name }}" data-day="{{ $schedule->day }}"
+            data-time="{{ $schedule->start_time }} - {{ $schedule->end_time }}" {{ $data->schedule_id == $schedule->id ? 'selected' : '' }}>
+            {{ $schedule->doctor->name }} - {{ $schedule->day }} - {{ $schedule->start_time }} -
+            {{ $schedule->end_time }}
+        </option>
         @endforeach
     </select>
 </div>

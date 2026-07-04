@@ -40,7 +40,7 @@ class DoctorScheduleController extends Controller
         $schedule->end_time = $request->get('end_time');
         $schedule->save();
 
-        return redirect()->route('schedules.index')->with('success', 'Schedule created successfully.');
+        return redirect()->route('admin.schedules.index')->with('success', 'Schedule created successfully.');
     }
 
     /**
@@ -83,7 +83,7 @@ class DoctorScheduleController extends Controller
 
         return response()->json([
             'status' => 'oke',
-            'msg' => view('schedules.getEditForm', compact('data', 'doctors'))->render()
+            'msg' => view('admin.schedules.getEditForm', compact('data', 'doctors'))->render()
         ], 200);
     }
 

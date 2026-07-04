@@ -251,24 +251,15 @@
                     <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{route('admin.services.index')}}" class="nav-link @yield('sidebar-services')">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Services</p>
-                            </a>
-                        </li>
+
+                        $role = Auth::user()->role;
                         <li class="nav-item">
                             <a href="{{ route('admin.doctors.index') }}" class="nav-link @yield('sidebar-doctors')">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Doctors</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.transactions.index') }}" class="nav-link @yield('sidebar-transactions')">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Transactions</p>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a href="{{ route('admin.articles.index') }}" class="nav-link @yield('sidebar-articles')">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -288,12 +279,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{route('admin.categories.index')}}" class="nav-link @yield('sidebar-categories')">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a href="{{route('admin.schedules.index')}}" class="nav-link @yield('sidebar-schedules')">
                                 <i class="nav-icon bi bi-speedometer"></i>

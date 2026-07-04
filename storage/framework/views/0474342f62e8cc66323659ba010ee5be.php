@@ -51,12 +51,10 @@ Doctors
 
                 </td>
                 <td>
-                    <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                        onclick="getEditForm(<?php echo e($doctor->id); ?>)">Edit</a>
+                    <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"onclick="getEditForm(<?php echo e($doctor->id); ?>)">Edit</a>
 
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-permission', Auth::user())): ?>
-                    <a href="#" class="btn btn-danger btn-sm"
-                        onclick="if(confirm('Are you sure to delete <?php echo e($doctor->id); ?> - <?php echo e($doctor->name); ?>?')) deleteDataRemove(<?php echo e($doctor->id); ?>)">
+                    <a href="#" class="btn btn-danger btn-sm"onclick="if(confirm('Are you sure to delete <?php echo e($doctor->id); ?> - <?php echo e($doctor->name); ?>?')) deleteDataRemove(<?php echo e($doctor->id); ?>)">
                         Delete
                     </a>
                     <?php endif; ?>

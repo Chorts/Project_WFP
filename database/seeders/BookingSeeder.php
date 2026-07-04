@@ -16,7 +16,7 @@ class BookingSeeder extends Seeder
         DB::table('bookings')->insert([
             [
                 'user_id' => 3,
-                'service_id' => 1,
+
                 'schedule_id' => 1,
                 'status' => 'Selesai',
                 'booking_date' => '2026-04-10',
@@ -25,7 +25,7 @@ class BookingSeeder extends Seeder
             ],
             [
                 'user_id' => 7,
-                'service_id' => 1,
+
                 'schedule_id' => 2,
                 'status' => 'Selesai',
                 'booking_date' => '2026-04-11',
@@ -34,7 +34,7 @@ class BookingSeeder extends Seeder
             ],
             [
                 'user_id' => 8,
-                'service_id' => 1,
+
                 'schedule_id' => 3,
                 'status' => 'Dipesan',
                 'booking_date' => '2026-04-12',
@@ -43,7 +43,7 @@ class BookingSeeder extends Seeder
             ],
             [
                 'user_id' => 3,
-                'service_id' => 1,
+
                 'schedule_id' => 4,
                 'status' => 'Dipesan',
                 'booking_date' => '2026-04-13',
@@ -52,7 +52,7 @@ class BookingSeeder extends Seeder
             ],
             [
                 'user_id' => 7,
-                'service_id' => 1,
+
                 'schedule_id' => 1,
                 'status' => 'Dibatalkan',
                 'booking_date' => '2026-04-14',
