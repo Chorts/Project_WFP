@@ -27,6 +27,8 @@
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Chat</th>
+                <th>Ringkasan</th>
+
 
             </tr>
         </thead>
@@ -45,7 +47,20 @@
                     <a href="<?php echo e(route('member.consultations.show', $consultation->id)); ?>" class="btn btn-sm btn-primary">
                         Lihat Chat
                     </a>
+                    <?php else: ?>
+                    <a href="<?php echo e(route('member.consultations.show', $consultation->id)); ?>" class="btn btn-sm btn-primary">
+                        Lihat histori chat
+                    </a>
                     <?php endif; ?>
+
+                </td>
+                <td>
+                    <?php if($consultation->ringkasan != ""): ?>
+                    <?php echo e($consultation->ringkasan ?? '-'); ?>
+
+                    <?php endif; ?>
+
+                    Belum tersedia
                 </td>
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

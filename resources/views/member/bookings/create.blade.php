@@ -1,4 +1,4 @@
-@extends('layouts.member')
+<!-- @extends('layouts.member')
 
 @section('title', 'Booking Konsultasi')
 @section('nav-bookings', 'active')
@@ -18,29 +18,12 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ route('member.bookings.store') }}">
+    <form method="POST" action="{{ route('member.bookings.memberStore') }}">
         @csrf
-
-        <!-- <div class="form-group mb-2">
-            <label>Dokter</label>
-            <select class="form-control" name="doctor_id" id="selectDoctor">
-                @foreach($doctors as $doctor)
-                <option value="{{ $doctor->id }}">
-                    {{ $doctor->name }}
-                </option>
-                @endforeach
-            </select>
-        </div> -->
 
         <div class="form-group mb-2">
             <label>Layanan</label>
-            <select class="form-control" name="service_id">
-                @foreach($services as $service)
-                <option value="{{ $service->id }}">
-                    {{ $service->service_name }}
-                </option>
-                @endforeach
-            </select>
+
         </div>
 
         <div class="form-group mb-2">
@@ -69,4 +52,4 @@
     </form>
 
 </div>
-@endsection
+@endsection -->

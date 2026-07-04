@@ -23,7 +23,8 @@
         <thead>
             <tr>
                 <th>Dokter</th>
-                <th>Layanan</th>
+                <th>Pasien</th>
+
                 <th>Tanggal Booking</th>
                 <th>Status</th>
 
@@ -35,7 +36,7 @@
             <tr>
                 <td>{{ $booking->schedule->doctor->name ?? '-' }}</td>
 
-                <td>{{ $booking->service->service_name ?? '-' }}</td>
+                <td>{{ $booking->user->name ?? '-' }}</td>
 
                 <td>
                     {{ $booking->booking_date }}

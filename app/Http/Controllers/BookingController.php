@@ -59,8 +59,10 @@ class BookingController extends Controller
 
     public function memberIndex()
     {
-        $bookings = Booking::where('user_id', auth()->id())->with(['schedule.doctor'])->get();
-        return view('member.bookings.index', compact('bookings'));
+        $bookings = Booking::where('user_id', auth()->id())->where("status", "Dipesan")->with(['schedule.doctor'])->get();
+        $schedules = DoctorSchedule::with('doctor')->get();
+
+        return view('member.bookings.index', compact('bookings', 'schedules'));
     }
 
 
@@ -98,6 +100,9 @@ class BookingController extends Controller
             ->with('success', 'Booking created successfully.');
     }
 
+    public function start() {}
+
+    public function close() {}
     /**
      * Display the specified resource.
      */

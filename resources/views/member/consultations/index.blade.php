@@ -27,6 +27,8 @@
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Chat</th>
+                <th>Ringkasan</th>
+
 
             </tr>
         </thead>
@@ -45,7 +47,19 @@
                     <a href="{{ route('member.consultations.show', $consultation->id) }}" class="btn btn-sm btn-primary">
                         Lihat Chat
                     </a>
+                    @else
+                    <a href="{{ route('member.consultations.show', $consultation->id) }}" class="btn btn-sm btn-primary">
+                        Lihat histori chat
+                    </a>
                     @endif
+
+                </td>
+                <td>
+                    @if($consultation->ringkasan != "")
+                    {{ $consultation->ringkasan ?? '-' }}
+                    @endif
+
+                    Belum tersedia
                 </td>
             </tr>
             @endforeach

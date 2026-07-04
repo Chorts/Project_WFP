@@ -18,31 +18,12 @@
     </div>
     <?php endif; ?>
 
-    <form method="POST" action="<?php echo e(route('member.bookings.store')); ?>">
+    <form method="POST" action="<?php echo e(route('member.bookings.memberStore')); ?>">
         <?php echo csrf_field(); ?>
-
-        <!-- <div class="form-group mb-2">
-            <label>Dokter</label>
-            <select class="form-control" name="doctor_id" id="selectDoctor">
-                <?php $__currentLoopData = $doctors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($doctor->id); ?>">
-                    <?php echo e($doctor->name); ?>
-
-                </option>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
-        </div> -->
 
         <div class="form-group mb-2">
             <label>Layanan</label>
-            <select class="form-control" name="service_id">
-                <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($service->id); ?>">
-                    <?php echo e($service->service_name); ?>
 
-                </option>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
         </div>
 
         <div class="form-group mb-2">

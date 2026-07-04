@@ -80,16 +80,18 @@ Route::middleware(['auth', 'can:access-doctor'])
         Route::get('profile', [DoctorProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [DoctorProfileController::class, 'update'])->name('profile.update');
 
-        Route::get('bookings', [BookingController::class, 'doctorIndex'])->name('bookings.index');
 
         Route::get('consultations', [ConsultationController::class, 'doctorIndex'])->name('consultations.index');
         Route::get('consultations/{id}', [ConsultationController::class, 'doctorShow'])->name('consultations.show');
+        Route::post('consultations/{id}/close', [ConsultationController::class, 'close'])->name('consultations.close');
         Route::post('consultations/{id}/message', [ChatController::class, 'doctorChat'])->name('consultations.doctorChat');
-        Route::post('consultations/{id}/close', [ChatController::class, 'close'])->name('consultations.close');
 
         Route::get('history', [ConsultationController::class, 'doctorHistory'])->name('history.index');
 
-        Route::resource('doctors', DoctorController::class);
+        Route::get('bookings', [BookingController::class, 'doctorIndex'])->name('bookings.index');
+        Route::get('doctors', [DoctorController::class, 'doctorIndex'])->name('doctors.index');
+        Route::get('articles', [ArticleController::class, 'doctorIndex'])->name('articles.index');
+        Route::get('consultations', [ConsultationController::class, 'doctorIndex'])->name('consultations.index');
     });
 
 Route::middleware(['auth', 'can:access-member'])
@@ -104,9 +106,11 @@ Route::middleware(['auth', 'can:access-member'])
 
         Route::get('bookings', [BookingController::class, 'memberIndex'])->name('bookings.index');
         Route::get('bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-        Route::post('bookings', [BookingController::class, 'store'])->name('bookings.store');
+        Route::post('bookings', [BookingController::class, 'memberStore'])->name('bookings.store');
 
         Route::get('consultations', [ConsultationController::class, 'memberIndex'])->name('consultations.index');
+        Route::post('consultations/{id}', [ConsultationController::class, 'store'])->name('consultations.store');
+
         Route::get('consultations/{id}', [ConsultationController::class, 'memberShow'])->name('consultations.show');
         Route::post('consultations/{id}/message', [ChatController::class, 'memberChat'])->name('consultations.memberChat');
 

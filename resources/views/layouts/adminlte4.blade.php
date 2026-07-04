@@ -252,7 +252,7 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
 
-                        $role = Auth::user()->role;
+                        @can('access-admin')
                         <li class="nav-item">
                             <a href="{{ route('admin.doctors.index') }}" class="nav-link @yield('sidebar-doctors')">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -286,6 +286,45 @@
                                 <p>Schedules</p>
                             </a>
                         </li>
+                        @endcan
+
+
+                        @can('access-doctor')
+                        <li class="nav-item">
+                            <a href="{{ route('doctor.doctors.index') }}" class="nav-link @yield('sidebar-doctors')">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Doctors</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="{{route('doctor.bookings.index')}}" class="nav-link @yield('sidebar-bookings')">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Bookings</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('doctor.consultations.index')}}" class="nav-link @yield('sidebar-consultations')">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Consultations</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('doctor.history.index')}}" class="nav-link @yield('sidebar-consultations')">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Riwayat Konsultasi</p>
+                            </a>
+                        </li>
+
+
+                        @endcan
+
+
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -953,6 +992,7 @@
     </script>
     <!--end::Script-->
     @stack("script")
+    @stack("modals")
 </body>
 <!--end::Body-->
 

@@ -252,6 +252,7 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
 
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access-admin')): ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route('admin.doctors.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -285,6 +286,45 @@
                                 <p>Schedules</p>
                             </a>
                         </li>
+                        <?php endif; ?>
+
+
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access-doctor')): ?>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.doctors.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Doctors</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.bookings.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-bookings'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Bookings</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.consultations.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-consultations'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Consultations</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.history.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-consultations'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Riwayat Konsultasi</p>
+                            </a>
+                        </li>
+
+
+                        <?php endif; ?>
+
+
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -952,6 +992,7 @@
     </script>
     <!--end::Script-->
     <?php echo $__env->yieldPushContent("script"); ?>
+    <?php echo $__env->yieldPushContent("modals"); ?>
 </body>
 <!--end::Body-->
 

@@ -108,6 +108,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <?php echo $__env->yieldPushContent('scripts'); ?>
+    <?php echo $__env->yieldPushContent('modals'); ?>
 </body>
 
 </html><?php /**PATH C:\xampp\htdocs\wfp\baru\Project_WFP\resources\views/layouts/member.blade.php ENDPATH**/ ?>
