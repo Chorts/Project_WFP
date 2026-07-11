@@ -23,11 +23,13 @@
             <tr>
                 <th>Booking ID</th>
                 <th>Dokter</th>
+                <th>Pasien</th>
                 <th>Status</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Chat</th>
                 <th>Aksi</th>
+                <th>Ringkasan</th>
 
             </tr>
         </thead>
@@ -37,6 +39,7 @@
             <tr>
                 <td><?php echo e($consultation->booking_id); ?></td>
                 <td><?php echo e($consultation->doctor->name ?? '-'); ?></td>
+                <td><?php echo e($consultation->user->name ?? '-'); ?></td>
                 <td><?php echo e($consultation->status ?? '-'); ?></td>
                 <td><?php echo e($consultation->started_at ?? '-'); ?></td>
                 <td><?php echo e($consultation->ended_at ?? '-'); ?></td>
@@ -53,12 +56,25 @@
 
                 </td>
 
+
                 <td>
                     <?php if($consultation->status == "Aktif"): ?>
                     <button type="submit" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalClose<?php echo e($consultation->id); ?>">
                         Tutup Konsultasi
                     </button>
+                    <?php else: ?>
+                    Tidak tersedia
+
                     <?php endif; ?>
+                </td>
+
+                <td>
+                    <?php if($consultation->ringkasan != ""): ?>
+                    <?php echo e($consultation->ringkasan ?? '-'); ?>
+
+                    <?php endif; ?>
+
+                    Belum tersedia
                 </td>
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

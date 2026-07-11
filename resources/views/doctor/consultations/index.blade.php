@@ -23,11 +23,13 @@
             <tr>
                 <th>Booking ID</th>
                 <th>Dokter</th>
+                <th>Pasien</th>
                 <th>Status</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Chat</th>
                 <th>Aksi</th>
+                <th>Ringkasan</th>
 
             </tr>
         </thead>
@@ -37,6 +39,7 @@
             <tr>
                 <td>{{ $consultation->booking_id }}</td>
                 <td>{{ $consultation->doctor->name ?? '-' }}</td>
+                <td>{{ $consultation->user->name ?? '-' }}</td>
                 <td>{{ $consultation->status ?? '-' }}</td>
                 <td>{{ $consultation->started_at ?? '-' }}</td>
                 <td>{{ $consultation->ended_at ?? '-' }}</td>
@@ -53,12 +56,24 @@
 
                 </td>
 
+
                 <td>
                     @if($consultation->status == "Aktif")
                     <button type="submit" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalClose{{ $consultation->id }}">
                         Tutup Konsultasi
                     </button>
+                    @else
+                    Tidak tersedia
+
                     @endif
+                </td>
+
+                <td>
+                    @if($consultation->ringkasan != "")
+                    {{ $consultation->ringkasan ?? '-' }}
+                    @endif
+
+                    Belum tersedia
                 </td>
             </tr>
             @endforeach
