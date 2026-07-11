@@ -1,0 +1,343 @@
+/* =========================================================
+   Libra-inspired theme for VitaGuard Member Area
+   Adapted from the "Libra" HTML template (YITH) — typography,
+   color language, card/button treatment and header/footer
+   composition are reinterpreted here on top of Bootstrap 5.
+   ========================================================= */
+
+:root {
+    --lb-primary: #3F7F5E;
+    /* brand green kept from existing app */
+    --lb-primary-dark: #2C5C43;
+    --lb-accent: #7CAA18;
+    /* Libra's signature olive-green accent */
+    --lb-ink: #1D181F;
+    /* Libra's dark heading ink */
+    --lb-body: #676768;
+    /* Libra's body copy grey */
+    --lb-muted: #928E86;
+    --lb-line: #E7E5DF;
+    --lb-bg: #FAF9F6;
+    --lb-topbar: #102438;
+    /* Libra's dark navy topbar */
+    --lb-card-radius: 6px;
+}
+
+body {
+    background-color: var(--lb-bg);
+    color: var(--lb-body);
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.lb-serif {
+    font-family: 'Playfair Display', serif;
+    color: var(--lb-ink);
+    font-weight: 700;
+}
+
+a {
+    color: var(--lb-primary);
+}
+
+a:hover {
+    color: var(--lb-primary-dark);
+}
+
+/* ---------- Top utility bar ---------- */
+.lb-topbar {
+    background-color: var(--lb-topbar);
+    color: #cfd8dc;
+    font-size: 12px;
+    letter-spacing: .5px;
+}
+
+.lb-topbar a {
+    color: #cfd8dc;
+    text-decoration: none;
+}
+
+.lb-topbar a:hover {
+    color: #ffffff;
+}
+
+/* ---------- Main navbar ---------- */
+.lb-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--lb-line);
+}
+
+.lb-navbar .lb-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--lb-primary-dark) !important;
+    letter-spacing: .5px;
+}
+
+.lb-navbar .lb-brand span {
+    color: var(--lb-accent);
+}
+
+.lb-navbar .nav-link {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--lb-ink) !important;
+    padding: 10px 14px !important;
+    position: relative;
+}
+
+.lb-navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 4px;
+    height: 2px;
+    background: var(--lb-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .2s ease;
+}
+
+.lb-navbar .nav-link:hover::after,
+.lb-navbar .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+.lb-navbar .nav-link.active {
+    color: var(--lb-primary-dark) !important;
+}
+
+/* ---------- Page header (Libra-style inner page banner) ---------- */
+.lb-page-header {
+    background-color: var(--lb-topbar);
+    background-image: url('../img/bg-pattern.png');
+    background-blend-mode: overlay;
+    background-repeat: repeat;
+    color: #fff;
+    padding: 42px 0;
+    margin-bottom: 32px;
+}
+
+.lb-page-header h1 {
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.lb-page-header p {
+    color: #cfd8dc;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+/* ---------- Buttons ---------- */
+.btn-lb {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 2px;
+    background-color: var(--lb-primary);
+    border: 1px solid var(--lb-primary);
+    color: #fff;
+    transition: all .2s ease;
+}
+
+.btn-lb:hover {
+    background-color: var(--lb-primary-dark);
+    border-color: var(--lb-primary-dark);
+    color: #fff;
+}
+
+.btn-lb-outline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 2px;
+    background-color: transparent;
+    border: 1px solid var(--lb-line);
+    color: var(--lb-ink);
+    transition: all .2s ease;
+}
+
+.btn-lb-outline:hover {
+    border-color: var(--lb-primary);
+    color: var(--lb-primary-dark);
+}
+
+/* ---------- Cards ---------- */
+.lb-card {
+    background: #fff;
+    border: 1px solid var(--lb-line);
+    border-radius: var(--lb-card-radius);
+    transition: box-shadow .2s ease, transform .2s ease;
+    overflow: hidden;
+}
+
+.lb-card:hover {
+    box-shadow: 0 10px 24px rgba(29, 24, 31, .08);
+    transform: translateY(-2px);
+}
+
+.lb-card .lb-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(63, 127, 94, .1);
+    color: var(--lb-primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 14px;
+}
+
+.lb-card .card-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.lb-meta {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--lb-muted);
+}
+
+/* ---------- Table -> Libra styled ---------- */
+.lb-table {
+    background: #fff;
+    border: 1px solid var(--lb-line);
+    border-radius: var(--lb-card-radius);
+    overflow: hidden;
+}
+
+.lb-table thead th {
+    background-color: var(--lb-topbar);
+    color: #fff;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border: none;
+    vertical-align: middle;
+}
+
+.lb-table td {
+    vertical-align: middle;
+    border-color: var(--lb-line);
+}
+
+/* ---------- Badges ---------- */
+.lb-badge {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.lb-badge-wait {
+    background: rgba(217, 164, 6, .12);
+    color: #9a7000;
+}
+
+.lb-badge-active {
+    background: rgba(63, 127, 94, .12);
+    color: var(--lb-primary-dark);
+}
+
+.lb-badge-done {
+    background: rgba(103, 103, 104, .12);
+    color: var(--lb-body);
+}
+
+/* ---------- Chat bubbles ---------- */
+.lb-chat-box {
+    background: #fff;
+    border: 1px solid var(--lb-line);
+    border-radius: var(--lb-card-radius);
+}
+
+.lb-bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+}
+
+.lb-bubble-user {
+    background: var(--lb-primary);
+    color: #fff;
+    border-bottom-right-radius: 2px;
+}
+
+.lb-bubble-other {
+    background: var(--lb-bg);
+    border: 1px solid var(--lb-line);
+    border-bottom-left-radius: 2px;
+}
+
+/* ---------- Empty state ---------- */
+.lb-empty {
+    border: 1px dashed var(--lb-line);
+    border-radius: var(--lb-card-radius);
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--lb-muted);
+    background: #fff;
+}
+
+/* ---------- Footer ---------- */
+.lb-footer {
+    background-color: var(--lb-topbar);
+    color: #b7c1c9;
+    margin-top: 60px;
+    padding: 46px 0 18px;
+}
+
+.lb-footer h5 {
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.lb-footer a {
+    color: #b7c1c9;
+    text-decoration: none;
+}
+
+.lb-footer a:hover {
+    color: var(--lb-accent);
+}
+
+.lb-footer .lb-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    margin-top: 30px;
+    padding-top: 16px;
+    font-size: 12px;
+    color: #8a97a1;
+}
+
+/* ---------- Form ---------- */
+.lb-form-control:focus {
+    border-color: var(--lb-primary);
+    box-shadow: 0 0 0 .15rem rgba(63, 127, 94, .15);
+}

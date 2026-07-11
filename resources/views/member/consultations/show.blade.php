@@ -4,43 +4,50 @@
 @section('nav-consultations', 'active')
 
 @section('content')
-<div class="container mt-4">
 
-    <a href="{{ route('member.consultations.index') }}" class="btn btn-secondary mb-3">
-        Kembali
+<div class="lb-page-header">
+    <div class="container">
+        <h1>Konsultasi{{ $consultation ? ' dengan ' . $consultation->doctor->name : '' }}</h1>
+        @if($consultation)
+        <p>
+            Status:
+            <span class="lb-badge {{ $consultation->status === 'Aktif' ? 'lb-badge-active' : 'lb-badge-done' }}">
+                {{ $consultation->status }}
+            </span>
+        </p>
+        @endif
+    </div>
+</div>
+
+<div class="container mb-5">
+
+    <a href="{{ route('member.consultations.index') }}" class="btn btn-lb-outline mb-4">
+        <i class="bi bi-arrow-left me-1"></i> Kembali
     </a>
 
     @if(!$consultation)
 
-    <div class="alert alert-danger">
+    <div class="lb-empty">
+        <i class="bi bi-chat-square-x fs-1 d-block mb-2"></i>
         Konsultasi tidak ditemukan.
     </div>
 
     @else
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <h4>Konsultasi dengan {{ $consultation->doctor->name  }}</h4>
-            <p>
-                Status: <b>{{ $consultation->status }}</b>
-            </p>
-        </div>
-    </div>
-
-    <div class="card mb-3">
-        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+    <div class="lb-chat-box mb-3">
+        <div class="p-3" style="max-height: 420px; overflow-y: auto;">
 
             @forelse($chats as $chat)
-            <div class="mb-2 d-flex {{ $chat->tipe_sender === 'user' ? 'justify-content-end' : 'justify-content-start' }}">
-                <div class="p-2 rounded {{ $chat->tipe_sender === 'user' ? 'bg-primary text-white' : 'bg-light' }}" style="max-width: 70%;">
+            <div class="mb-3 d-flex {{ $chat->tipe_sender === 'user' ? 'justify-content-end' : 'justify-content-start' }}">
+                <div class="lb-bubble {{ $chat->tipe_sender === 'user' ? 'lb-bubble-user' : 'lb-bubble-other' }}">
                     <div>{{ $chat->chat }}</div>
-                    <small class="d-block text-end" style="opacity: 0.7;">
+                    <small class="d-block text-end mt-1" style="opacity: 0.7; font-size: 10px;">
                         {{ $chat->created_at }}
                     </small>
                 </div>
             </div>
             @empty
-            <p class="text-muted">Belum ada pesan.</p>
+            <p class="text-muted mb-0">Belum ada pesan.</p>
             @endforelse
 
         </div>
@@ -49,13 +56,13 @@
     @if($consultation->status === 'Aktif')
     <form action="{{ route('member.consultations.memberChat', $consultation->id) }}" method="POST">
         @csrf
-        <div class="input-group ">
-            <input type="text" name="chat" class="form-control" placeholder="Tulis pesan..." required>
-            <button type="submit" class="btn btn-primary">Kirim</button>
+        <div class="input-group">
+            <input type="text" name="chat" class="form-control lb-form-control" placeholder="Tulis pesan..." required>
+            <button type="submit" class="btn btn-lb">Kirim</button>
         </div>
     </form>
     @else
-    <div class="alert alert-secondary">
+    <div class="lb-empty py-3">
         Konsultasi ini sudah selesai.
     </div>
     @endif

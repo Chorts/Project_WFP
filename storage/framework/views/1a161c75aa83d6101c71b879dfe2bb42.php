@@ -1,9 +1,7 @@
-@extends('layouts.member')
+<?php $__env->startSection('title', 'Booking Saya'); ?>
+<?php $__env->startSection('nav-bookings', 'active'); ?>
 
-@section('title', 'Booking Saya')
-@section('nav-bookings', 'active')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="lb-page-header">
     <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
@@ -19,14 +17,14 @@
 
 <div class="container mb-5">
 
-    @if($bookings->isEmpty())
+    <?php if($bookings->isEmpty()): ?>
 
     <div class="lb-empty">
         <i class="bi bi-calendar-x fs-1 d-block mb-2"></i>
         Anda belum memiliki booking konsultasi.
     </div>
 
-    @else
+    <?php else: ?>
 
     <div class="table-responsive lb-table">
         <table class="table mb-0 align-middle">
@@ -40,75 +38,78 @@
             </thead>
 
             <tbody>
-                @foreach($bookings as $booking)
+                <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td>
                         <i class="bi bi-person-badge me-1" style="color: var(--lb-primary-dark);"></i>
-                        {{ $booking->schedule->doctor->name ?? '-' }}
+                        <?php echo e($booking->schedule->doctor->name ?? '-'); ?>
+
                     </td>
-                    <td>{{ $booking->booking_date }}</td>
+                    <td><?php echo e($booking->booking_date); ?></td>
                     <td>
-                        @php
+                        <?php
                         $statusClass = match(true) {
                         str_contains(strtolower($booking->status ?? ''), 'aktif') => 'lb-badge-active',
                         str_contains(strtolower($booking->status ?? ''), 'selesai') => 'lb-badge-done',
                         default => 'lb-badge-wait',
                         };
-                        @endphp
-                        <span class="lb-badge {{ $statusClass }}">{{ $booking->status ?? 'Menunggu' }}</span>
+                        ?>
+                        <span class="lb-badge <?php echo e($statusClass); ?>"><?php echo e($booking->status ?? 'Menunggu'); ?></span>
                     </td>
                     <td>
-                        <form action="{{ route('member.consultations.store', $booking->id) }}" method="POST">
-                            @csrf
+                        <form action="<?php echo e(route('member.consultations.store', $booking->id)); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <button type="submit" class="btn btn-lb btn-sm">
                                 Mulai Konsultasi
                             </button>
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
 
         </table>
     </div>
 
-    @endif
+    <?php endif; ?>
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('modals')
-{{-- Modal Create Booking --}}
+<?php $__env->startPush('modals'); ?>
+
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ route('member.bookings.store') }}">
+        <form method="POST" action="<?php echo e(route('member.bookings.store')); ?>">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: var(--lb-topbar); color: #fff;">
                     <h4 class="modal-title lb-serif" style="color: #fff;">Booking Konsultasi</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    @csrf
+                    <?php echo csrf_field(); ?>
 
-                    @if ($errors->any())
+                    <?php if($errors->any()): ?>
                     <div class="alert alert-danger">
                         <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
-                    @endif
+                    <?php endif; ?>
 
                     <div class="form-group mb-3">
                         <label class="form-label lb-meta">Jadwal</label>
                         <select class="form-control lb-form-control" name="schedule_id" id="selectSchedule">
-                            @foreach($schedules as $schedule)
-                            <option value="{{ $schedule->id }}">
-                                {{ $schedule->doctor->name ?? '' }}
-                                - {{ $schedule->day }}
+                            <?php $__currentLoopData = $schedules; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $schedule): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($schedule->id); ?>">
+                                <?php echo e($schedule->doctor->name ?? ''); ?>
+
+                                - <?php echo e($schedule->day); ?>
+
                             </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
 
@@ -127,4 +128,6 @@
         </form>
     </div>
 </div>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.member', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\wfp\Project UTS\Project_WFP\resources\views/member/bookings/index.blade.php ENDPATH**/ ?>

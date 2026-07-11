@@ -4,9 +4,13 @@
 @section('nav-bookings', 'active')
 
 @section('content')
-<div class="container">
+<div class="lb-page-header">
+    <div class="container">
+        <h1>Booking Konsultasi</h1>
+    </div>
+</div>
 
-    <h2>Booking Konsultasi</h2>
+<div class="container mb-5">
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -18,38 +22,40 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ route('member.bookings.memberStore') }}">
-        @csrf
+    <div class="lb-card p-4">
+        <form method="POST" action="{{ route('member.bookings.memberStore') }}">
+            @csrf
 
-        <div class="form-group mb-2">
-            <label>Layanan</label>
+            <div class="form-group mb-3">
+                <label class="lb-meta">Layanan</label>
 
-        </div>
+            </div>
 
-        <div class="form-group mb-2">
-            <label>Jadwal</label>
-            <select class="form-control" name="schedule_id" id="selectSchedule">
-                @foreach($schedules as $schedule)
-                <option value="{{ $schedule->id }}">
-                    {{ $schedule->doctor->name ?? '' }}
-                    - {{ $schedule->day }}
-                </option>
-                @endforeach
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label class="lb-meta">Jadwal</label>
+                <select class="form-control lb-form-control" name="schedule_id" id="selectSchedule">
+                    @foreach($schedules as $schedule)
+                    <option value="{{ $schedule->id }}">
+                        {{ $schedule->doctor->name ?? '' }}
+                        - {{ $schedule->day }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
 
-        <div class="form-group mb-2">
-            <label>Tanggal Booking</label>
-            <input type="date"
-                class="form-control"
-                name="booking_date">
-        </div>
+            <div class="form-group mb-3">
+                <label class="lb-meta">Tanggal Booking</label>
+                <input type="date"
+                    class="form-control lb-form-control"
+                    name="booking_date">
+            </div>
 
-        <input type="hidden" name="status" value="menunggu">
+            <input type="hidden" name="status" value="menunggu">
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="{{ route('member.bookings.index') }}" class="btn btn-secondary">Cancel</a>
-    </form>
+            <button type="submit" class="btn btn-lb">Submit</button>
+            <a href="{{ route('member.bookings.index') }}" class="btn btn-lb-outline">Cancel</a>
+        </form>
+    </div>
 
 </div>
 @endsection -->
