@@ -50,10 +50,10 @@ Doctors
                     {{ $doctor->specialization->name }}
                 </td>
                 <td>
-                    <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"onclick="getEditForm({{ $doctor->id }})">Edit</a>
+                    <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal" onclick="getEditForm({{ $doctor->id }})">Edit</a>
 
                     @can('delete-permission', Auth::user())
-                    <a href="#" class="btn btn-danger btn-sm"onclick="if(confirm('Are you sure to delete {{ $doctor->id }} - {{ $doctor->name }}?')) deleteDataRemove({{ $doctor->id }})">
+                    <a href="#" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure to delete {{ $doctor->id }} - {{ $doctor->name }}?')) deleteDataRemove({{ $doctor->id }})">
                         Delete
                     </a>
                     @endcan
@@ -96,14 +96,14 @@ Doctors
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mb-2">
+                    <!-- <div class="form-group mb-2">
                         <label>Users</label>
                         <select class="form-control" name="user_id">
                             @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

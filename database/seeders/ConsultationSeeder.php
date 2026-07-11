@@ -45,7 +45,7 @@ class ConsultationSeeder extends Seeder
 
                 'started_at' => now()->subHours(2),
                 'ended_at' => null,
-                'ringkasan' => 'Pasien melaporkan batuk kering dan tenggorokan gatal sejak kemarin. Sesi konsultasi masih berlangsung, menunggu hasil pemeriksaan lanjutan sebelum diberikan rekomendasi obat.',
+                'ringkasan' => '',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -57,7 +57,7 @@ class ConsultationSeeder extends Seeder
 
                 'started_at' => now()->subMinutes(30),
                 'ended_at' => null,
-                'ringkasan' => 'Pasien berkonsultasi mengenai nyeri sendi pada lutut setelah aktivitas olahraga. Dokter sedang meninjau riwayat cedera sebelumnya sebelum memberikan rekomendasi penanganan.',
+                'ringkasan' => '',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

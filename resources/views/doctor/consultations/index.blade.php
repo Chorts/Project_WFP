@@ -26,6 +26,7 @@
                 <th>Status</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
+                <th>Chat</th>
                 <th>Aksi</th>
 
             </tr>
@@ -39,6 +40,18 @@
                 <td>{{ $consultation->status ?? '-' }}</td>
                 <td>{{ $consultation->started_at ?? '-' }}</td>
                 <td>{{ $consultation->ended_at ?? '-' }}</td>
+                <td>
+                    @if($consultation->status == "Aktif")
+                    <a href="{{ route('doctor.consultations.show', $consultation->id) }}" class="btn btn-sm btn-primary">
+                        Lihat Chat
+                    </a>
+                    @else
+                    <a href="{{ route('doctor.consultations.show', $consultation->id) }}" class="btn btn-sm btn-primary">
+                        Lihat histori chat
+                    </a>
+                    @endif
+
+                </td>
 
                 <td>
                     @if($consultation->status == "Aktif")

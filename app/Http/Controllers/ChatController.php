@@ -29,7 +29,7 @@ class ChatController extends Controller
 
         // return view('member.chats.index', compact('chats'));
 
-        $consultation = Consultation::where("id", $id)->get();
+        $consultation = Consultation::where("id", $id)->first();
 
         $chat = new Chat();
         $chat->consultation_id = $consultation->id;
@@ -38,17 +38,7 @@ class ChatController extends Controller
         $chat->chat = $request->get('chat');
         $chat->save();
 
-        return redirect()->route('doctor.consultations.show', $consultation->id())->with('success', 'Pesan terkirim.');
-    }
-
-    public function close(string $id)
-    {
-        $consultation = Consultation::where("id", $id)->where("doctor_id", auth()->id())->first();
-
-        $consultation::update("status", "Selesai");
-        $consultation::update("ended_at", now());
-
-        return redirect()->route('doctor.consultations.index')->with('success', 'Konsultasi ditutup.');
+        return redirect()->route('doctor.consultations.show', $consultation->id)->with('success', 'Pesan terkirim.');
     }
 
     public function memberChat(Request $request, string $id)
@@ -64,6 +54,18 @@ class ChatController extends Controller
 
         return redirect()->route('member.consultations.show', $consultation->id)->with('success', 'Pesan terkirim.');
     }
+
+    public function close(string $id)
+    {
+        $consultation = Consultation::where("id", $id)->where("doctor_id", auth()->id())->first();
+
+        $consultation::update("status", "Selesai");
+        $consultation::update("ended_at", now());
+
+        return redirect()->route('doctor.consultations.index')->with('success', 'Konsultasi ditutup.');
+    }
+
+
 
 
     /**

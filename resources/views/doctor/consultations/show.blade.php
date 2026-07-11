@@ -1,4 +1,4 @@
-@extends('layouts.member')
+@extends('layouts.adminlte4')
 
 @section('title', 'Konsultasi')
 @section('nav-consultations', 'active')
@@ -6,7 +6,7 @@
 @section('content')
 <div class="container mt-4">
 
-    <a href="{{ route('member.consultations.index') }}" class="btn btn-secondary mb-3">
+    <a href="{{ route('doctor.consultations.index') }}" class="btn btn-secondary mb-3">
         Kembali
     </a>
 
@@ -47,7 +47,7 @@
     </div>
 
     @if($consultation->status === 'Aktif')
-    <form action="{{ route('member.consultations.memberChat', $consultation->id) }}" method="POST">
+    <form action="{{ route('doctor.consultations.doctorChat', $consultation->id) }}" method="POST">
         @csrf
         <div class="input-group ">
             <input type="text" name="chat" class="form-control" placeholder="Tulis pesan..." required>

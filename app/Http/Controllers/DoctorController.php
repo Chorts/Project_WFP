@@ -7,6 +7,7 @@ use App\Models\Specialization;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
@@ -67,11 +68,18 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
+        $user = new User();
+        $user->name = "Dr." . $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = Hash::make('12345678');
+        $user->role = 'doctor';
+        $user->save();
+
         $doctor = new Doctor();
         $doctor->name = $request->get('name');
         $doctor->email = $request->get('email');
         $doctor->specialization_id = $request->get('specialization_id');
-        $doctor->user_id = $request->get('user_id');
+        $doctor->user_id = $user->id;
         $doctor->save();
 
         return redirect()->route('admin.doctors.index')->with('success', 'Doctor created successfully.');
@@ -100,7 +108,7 @@ class DoctorController extends Controller
     {
         $doctor->name = $request->get('name');
         $doctor->email = $request->get('email');
-        $doctor->specialization = $request->get('specialization');
+        $doctor->specialization_id = $request->get('specialization');
         $doctor->user_id = auth()->id();
         $doctor->save();
 

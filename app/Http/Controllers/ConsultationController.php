@@ -37,11 +37,12 @@ class ConsultationController extends Controller
     public function doctorShow($id)
     {
         $doctor = Doctor::where("user_id", auth()->id())->first();
-        $consultation = Consultation::where("id", $id)->where("doctor_id", $doctor->id)->with("member")->first();
+        $consultation = Consultation::where("id", $id)->where("doctor_id", $doctor->id)->first();
 
-        $chat = Chat::where("consultation_id", $id)->orderBy("created_at")->get();
 
-        return view('doctor.consultations.show', compact('consultation', 'chat'));
+        $chats = Chat::where("consultation_id", $id)->orderBy("created_at")->get();
+
+        return view('doctor.consultations.show', compact('consultation', 'chats'));
     }
 
 

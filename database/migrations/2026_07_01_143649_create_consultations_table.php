@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->constrained('users');
 
-            $table->text('ringkasan');
+            $table->text('ringkasan')->nullable();
 
             $table->enum('status', [
                 'Aktif',
