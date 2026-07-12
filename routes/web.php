@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/myprofile', function () {
         return view('about-me');
     });
+    Route::get('/chat', [ChatController::class, 'bacaChat'])->name('chat.baca');
 });
 
 Auth::routes();

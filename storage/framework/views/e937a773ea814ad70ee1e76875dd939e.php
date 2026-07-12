@@ -251,60 +251,80 @@
                     <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
+
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access-admin')): ?>
                         <li class="nav-item">
-                            <a href="<?php echo e(route('services.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-services'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Services</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo e(url('doctors')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
+                            <a href="<?php echo e(route('admin.doctors.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Doctors</p>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="<?php echo e(url('transactions')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-transactions'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Transactions</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo e(url('articles')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-articles'); ?>">
+                            <a href="<?php echo e(route('admin.articles.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-articles'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Articles</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo e(route('bookings.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-bookings'); ?>">
+                            <a href="<?php echo e(route('admin.bookings.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-bookings'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Bookings</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?php echo e(route('users.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-users'); ?>">
+                            <a href="<?php echo e(route('admin.users.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-users'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Users</p>
                             </a>
                         </li>
+
+
                         <li class="nav-item">
-                            <a href="<?php echo e(route('chats.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-chats'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Chats</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo e(route('categories.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-categories'); ?>">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo e(route('schedules.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-schedules'); ?>">
+                            <a href="<?php echo e(route('admin.schedules.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-schedules'); ?>">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Schedules</p>
                             </a>
                         </li>
+                        <?php endif; ?>
+
+
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access-doctor')): ?>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.doctors.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-doctors'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Doctors</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.bookings.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-bookings'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Bookings</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.consultations.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-consultations'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Consultations</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('doctor.history.index')); ?>" class="nav-link <?php echo $__env->yieldContent('sidebar-consultations'); ?>">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Riwayat Konsultasi</p>
+                            </a>
+                        </li>
+
+
+                        <?php endif; ?>
+
+
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-speedometer"></i>
@@ -770,7 +790,7 @@
             scrollbarAutoHide: 'leave',
             scrollbarClickScroll: true,
         };
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
             if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
                 OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
@@ -813,8 +833,7 @@
         // ++++++++++++++++++++++++++++++++++++++++++
 
         const sales_chart_options = {
-            series: [
-                {
+            series: [{
                     name: 'Digital Goods',
                     data: [28, 48, 40, 19, 86, 27, 90],
                 },
@@ -894,11 +913,9 @@
 
         // Sparkline charts
         const option_sparkline1 = {
-            series: [
-                {
-                    data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
-                },
-            ],
+            series: [{
+                data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
+            }, ],
             chart: {
                 type: 'area',
                 height: 50,
@@ -922,11 +939,9 @@
         sparkline1.render();
 
         const option_sparkline2 = {
-            series: [
-                {
-                    data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
-                },
-            ],
+            series: [{
+                data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
+            }, ],
             chart: {
                 type: 'area',
                 height: 50,
@@ -950,11 +965,9 @@
         sparkline2.render();
 
         const option_sparkline3 = {
-            series: [
-                {
-                    data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
-                },
-            ],
+            series: [{
+                data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
+            }, ],
             chart: {
                 type: 'area',
                 height: 50,
@@ -979,6 +992,7 @@
     </script>
     <!--end::Script-->
     <?php echo $__env->yieldPushContent("script"); ?>
+    <?php echo $__env->yieldPushContent("modals"); ?>
 </body>
 <!--end::Body-->
 

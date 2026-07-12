@@ -172,4 +172,12 @@ class ChatController extends Controller
             ], 200);
         }
     }
+
+    public function bacaChat(Request $request) {
+        $consId = $request->consId;
+        $idLast = $request->idLast ?? 0;
+
+        $chats = Chat::where('consultation_id', $consId)->where('id', '>', $idLast)->orderBy('created_at')->get();
+        return response()->json(['status' => 'oke', 'chats' => $chats]);
+    }
 }

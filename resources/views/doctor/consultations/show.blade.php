@@ -28,10 +28,10 @@
     </div>
 
     <div class="card mb-3">
-        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+        <div class="card-body" id="chat" style="max-height: 400px; overflow-y: auto;">
 
             @forelse($chats as $chat)
-            <div class="mb-2 d-flex {{ $chat->tipe_sender === 'user' ? 'justify-content-end' : 'justify-content-start' }}">
+            <div class="mb-2 d-flex {{ $chat->tipe_sender === 'user' ? 'justify-content-start' : 'justify-content-end' }}">
                 <div class="p-2 rounded {{ $chat->tipe_sender === 'user' ? 'bg-primary text-white' : 'bg-light' }}" style="max-width: 70%;">
                     <div>{{ $chat->chat }}</div>
                     <small class="d-block text-end" style="opacity: 0.7;">
@@ -64,3 +64,38 @@
 
 </div>
 @endsection
+
+@push('script')
+<script>
+    $(function () {
+    var cont = document.getElementById('chat');
+    cont.scrollTop = cont.scrollHeight;
+    });
+    var idLast = {{ $chats->isNotEmpty() && $chats->last()->id }};
+    var consId = {{ $consultation->id }};
+    @if ($consultation && $consultation->status === "Aktif")
+    setInterval(function(){
+        $.ajax({
+            type: 'GET',
+            url: '{{ route("chat.baca") }}',
+            data: { 'consId': consId, 'idLast': idLast}, 
+            success: function(data) {
+                if (data.status == 'oke' && data.chats.length > 0) {
+                    $.each(data.chats, function (i, chat) {
+                        var user = chat.tipe_sender === 'doctor';
+                        var align = user ? 'justify-content-end' : 'justify-content-start';
+                        var chatBubble = user ? 'bg-primary text-white' : 'bg-light';
+                        $('#chat').append('<div class="mb-2 d-flex ' + align + '">' +
+                        '<div class="p-2 rounded ' + chatBubble + '" style="max-width: 70%;">' +
+                        '<div>' + chat.chat + '</div>' + '<small class="d-block text-end" style="opacity: 0.7;">' + chat.created_at + '</small>' +'</div></div>');
+                        idLast = chat.id;
+                    });
+                    var cont = document.getElementById('chat');
+                    cont.scrollTop = cont.scrollHeight;
+                }
+            }
+        })
+    }, 3000);
+    @endif
+</script>
+@endpush

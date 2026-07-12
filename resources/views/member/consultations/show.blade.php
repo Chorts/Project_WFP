@@ -35,7 +35,7 @@
     @else
 
     <div class="lb-chat-box mb-3">
-        <div class="p-3" style="max-height: 420px; overflow-y: auto;">
+        <div class="p-3" id="chat" style="max-height: 420px; overflow-y: auto;">
 
             @forelse($chats as $chat)
             <div class="mb-3 d-flex {{ $chat->tipe_sender === 'user' ? 'justify-content-end' : 'justify-content-start' }}">
@@ -71,3 +71,39 @@
 
 </div>
 @endsection
+
+@push('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(function () {
+    var cont = document.getElementById('chat');
+    cont.scrollTop = cont.scrollHeight;
+    });
+    var idLast = {{ $chats->isNotEmpty() && $chats->last()->id }};
+    var consId = {{ $consultation->id }};
+    @if ($consultation && $consultation->status === "Aktif")
+    setInterval(function(){
+        $.ajax({
+            type: 'GET',
+            url: '{{ route("chat.baca") }}',
+            data: { 'consId': consId, 'idLast': idLast}, 
+            success: function(data) {
+                if (data.status == 'oke' && data.chats.length > 0) {
+                    $.each(data.chats, function (i, chat) {
+                        var user = chat.tipe_sender === 'user';
+                        var align = user ? 'justify-content-end' : 'justify-content-start';
+                        var chatBubble = user ? 'lb-bubble lb-bubble-user' : 'lb-bubble lb-bubble-other';
+                        $('#chat').append('<div class="mb-3 d-flex ' + align + '">' +
+                        '<div class="' + chatBubble + '">' +
+                        '<div>' + chat.chat + '</div>' + '<small class="d-block text-end mt-1" style="opacity: 0.7; font-size: 10px;">' + chat.created_at + '</small>' +  '</div></div>');
+                        idLast = chat.id;
+                    });
+                    var cont = document.getElementById('chat');
+                    cont.scrollTop = cont.scrollHeight;
+                }
+            }
+        })
+    }, 3000);
+    @endif
+</script>
+@endpush
