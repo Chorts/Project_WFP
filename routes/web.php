@@ -23,12 +23,27 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::middleware(['auth'])->group(function () {
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // });
+    // Route::get('/myprofile', function () {
+    //     return view('about-me');
+    // });
+
     Route::get('/', function () {
-        return view('welcome');
+        $user = auth()->user();
+
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+            case 'doctor':
+                return redirect()->route('doctor.bookings.index');
+            case 'member':
+            default:
+                return redirect()->route('member.articles.index');
+        }
     });
-    Route::get('/myprofile', function () {
-        return view('about-me');
-    });
+
     Route::get('/chat', [ChatController::class, 'bacaChat'])->name('chat.baca');
 });
 
