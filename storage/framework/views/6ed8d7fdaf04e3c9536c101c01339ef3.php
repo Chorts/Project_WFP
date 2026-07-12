@@ -11,21 +11,21 @@
 </head>
 
 <body> -->
-@extends('layouts.adminlte4')
-@section('sidebar-doctors')
+
+<?php $__env->startSection('sidebar-doctors'); ?>
     active
-@endsection
-@section('title')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?>
     Doctors
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="container">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('status'))
-            <div class="alert alert-warning">{{ session('status') }}</div>
-        @endif
+        <?php if(session('success')): ?>
+            <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+        <?php endif; ?>
+        <?php if(session('status')): ?>
+            <div class="alert alert-warning"><?php echo e(session('status')); ?></div>
+        <?php endif; ?>
 
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalCreate">
             + New Doctor
@@ -42,69 +42,70 @@
                     <td style="font-weight:bold">Specialization</td>
                     <td style="font-weight:bold">Action</td>
                 </tr>
-                @foreach ($doctors as $doctor)
-                    <tr id="tr_{{ $doctor->id }}">
-                        <td id="td_id_{{ $doctor->id }}">{{ $doctor->id }}</td>
-                        <td id="td_photo_{{ $doctor->id }}">
-                            @if ($doctor->photo)
-                                <img src="{{ asset('storage/' . $doctor->photo) }}"
+                <?php $__currentLoopData = $doctors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <tr id="tr_<?php echo e($doctor->id); ?>">
+                        <td id="td_id_<?php echo e($doctor->id); ?>"><?php echo e($doctor->id); ?></td>
+                        <td id="td_photo_<?php echo e($doctor->id); ?>">
+                            <?php if($doctor->photo): ?>
+                                <img src="<?php echo e(asset('storage/' . $doctor->photo)); ?>"
                                     style="width:40px;height:40px;object-fit:cover;border-radius:50%;">
-                            @else
+                            <?php else: ?>
                                 -
-                            @endif
+                            <?php endif; ?>
                         </td>
-                        <td id="td_name_{{ $doctor->id }}">{{ $doctor->name }}</td>
-                        <td id="td_email_{{ $doctor->id }}">{{ $doctor->user->email ?? '-' }}</td>
-                        <td id="td_specialization_{{ $doctor->id }}">{{ $doctor->specialization_id }} -
-                            {{ $doctor->specialization->name }}
+                        <td id="td_name_<?php echo e($doctor->id); ?>"><?php echo e($doctor->name); ?></td>
+                        <td id="td_email_<?php echo e($doctor->id); ?>"><?php echo e($doctor->user->email ?? '-'); ?></td>
+                        <td id="td_specialization_<?php echo e($doctor->id); ?>"><?php echo e($doctor->specialization_id); ?> -
+                            <?php echo e($doctor->specialization->name); ?>
+
                         </td>
                         <td>
                             <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                onclick="getEditForm({{ $doctor->id }})">Edit</a>
+                                onclick="getEditForm(<?php echo e($doctor->id); ?>)">Edit</a>
 
-                            @can('delete-permission', Auth::user())
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-permission', Auth::user())): ?>
                                 <a href="#" class="btn btn-danger btn-sm"
-                                    onclick="if(confirm('Are you sure to delete {{ $doctor->id }} - {{ $doctor->name }}?')) deleteDataRemove({{ $doctor->id }})">
+                                    onclick="if(confirm('Are you sure to delete <?php echo e($doctor->id); ?> - <?php echo e($doctor->name); ?>?')) deleteDataRemove(<?php echo e($doctor->id); ?>)">
                                     Delete
                                 </a>
-                            @endcan
+                            <?php endif; ?>
                         </td>
                     </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
         </table>
     </div>
     <!-- </body>
 
                 </html> -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('modals')
-    {{-- Modal Create --}}
+<?php $__env->startPush('modals'); ?>
+    
     <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ route('admin.doctors.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="<?php echo e(route('admin.doctors.store')); ?>" enctype="multipart/form-data">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add New Doctor</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="form-group mb-2">
                             <label>Users</label>
                             <select class="form-control" name="user_id">
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
-                                @endforeach
+                                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?> (<?php echo e($user->email); ?>)</option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="form-group mb-2">
                             <label>Specialization</label>
                             <select class="form-control" name="specialization_id">
-                                @foreach ($specializations as $specialization)
-                                    <option value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $specializations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $specialization): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($specialization->id); ?>"><?php echo e($specialization->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="form-group mb-2">
@@ -133,7 +134,7 @@
         </div>
     </div>
 
-    {{-- Modal Edit Type B --}}
+    
     <div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -148,14 +149,14 @@
             </div>
         </div>
     </div>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
     <script>
         function getEditForm(id) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route("admin.doctors.getEditForm") }}',
+                url: '<?php echo e(route("admin.doctors.getEditForm")); ?>',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id
@@ -188,7 +189,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route("admin.doctors.saveDataUpdate") }}',
+                url: '<?php echo e(route("admin.doctors.saveDataUpdate")); ?>',
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -208,7 +209,7 @@
         function deleteDataRemove(id) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route("admin.doctors.deleteData") }}',
+                url: '<?php echo e(route("admin.doctors.deleteData")); ?>',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id
@@ -221,4 +222,5 @@
             });
         }
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.adminlte4', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\wfp\Project UTS\Project_WFP\resources\views/admin/doctors/index.blade.php ENDPATH**/ ?>

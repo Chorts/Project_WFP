@@ -42,9 +42,14 @@
             <div class="lb-card h-100">
 
                 <div class="p-4">
+                    @if ($doctor->photo)
+                    <img src="{{ asset('storage/' . $doctor->photo) }}" alt="{{ $doctor->name }}"
+                        class="rounded-circle mb-2" style="width:70px;height:70px;object-fit:cover;">
+                    @else
                     <div class="lb-card-icon">
                         <i class="bi bi-person-hearts"></i>
                     </div>
+                    @endif
 
                     <h5 class="card-title mb-1">
                         {{ $doctor->name }}
@@ -54,9 +59,9 @@
                         {{ $doctor->specialization->name ?? '-' }}
                     </p>
 
-                    <p class="mb-0">
-                        <i class="bi bi-envelope me-1"></i>{{ $doctor->email ?? '-' }}
-                    </p>
+                    <a href="{{ route('member.doctors.show', $doctor->id) }}" class="btn btn-lb btn-sm">
+                        Lihat Profil
+                    </a>
                 </div>
 
             </div>
@@ -68,3 +73,4 @@
 
 </div>
 @endsection
+    

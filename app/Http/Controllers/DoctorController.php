@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -16,7 +17,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $allDoctors = Doctor::with('specialization')->get();
+        $allDoctors = Doctor::with(['specialization', 'user'])->get();
         $specializations = Specialization::all();
         $users = User::where('role', '!=', 'doctor')->get();
         return view('admin.doctors.index', ['doctors' => $allDoctors, 'specializations' => $specializations, 'users' => $users]);
@@ -24,7 +25,7 @@ class DoctorController extends Controller
 
     public function publicIndex(Request $request)
     {
-        $query = Doctor::with('specialization');
+        $query = Doctor::with(['specialization', 'user']);
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -37,7 +38,7 @@ class DoctorController extends Controller
 
     public function doctorIndex(Request $request)
     {
-        $query = Doctor::with('specialization');
+        $query = Doctor::with(['specialization', 'user']);
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -50,7 +51,7 @@ class DoctorController extends Controller
 
     public function publicShow($id)
     {
-        $doctor = Doctor::with('specialization')->find($id);
+        $doctor = Doctor::with(['specialization', 'user', 'schedules'])->findOrFail($id);
 
         return view('member.doctors.show', compact('doctor'));
     }
@@ -68,12 +69,14 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        // $user = new User();
-        // $user->name = "Dr." . $request->get('name');
-        // $user->email = $request->get('email');
-        // $user->password = Hash::make('12345678');
-        // $user->role = 'doctor';
-        // $user->save();
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'specialization_id' => 'required|exists:specializations,id',
+            'phone' => 'nullable|string|max:20',
+            'bio' => 'nullable|string',
+            'experience_years' => 'nullable|integer|min:0',
+            'photo' => 'nullable|image|max:2048',
+        ]);
 
         $user = User::find($request->get('user_id'));
         $user->role = 'doctor';
@@ -82,7 +85,15 @@ class DoctorController extends Controller
         $doctor = new Doctor();
         $doctor->name = "Dr. " . $user->name;
         $doctor->specialization_id = $request->get('specialization_id');
+        $doctor->phone = $request->get('phone');
+        $doctor->bio = $request->get('bio');
+        $doctor->experience_years = $request->get('experience_years');
         $doctor->user_id = $user->id;
+
+        if ($request->hasFile('photo')) {
+            $doctor->photo = $request->file('photo')->store('doctors', 'public');
+        }
+
         $doctor->save();
 
         return redirect()->route('admin.doctors.index')->with('success', 'Doctor created successfully.');
@@ -109,10 +120,28 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'specialization_id' => 'required|exists:specializations,id',
+            'phone' => 'nullable|string|max:20',
+            'bio' => 'nullable|string',
+            'experience_years' => 'nullable|integer|min:0',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
         $doctor->name = $request->get('name');
-        $doctor->email = $request->get('email');
-        $doctor->specialization_id = $request->get('specialization');
-        $doctor->user_id = auth()->id();
+        $doctor->specialization_id = $request->get('specialization_id');
+        $doctor->phone = $request->get('phone');
+        $doctor->bio = $request->get('bio');
+        $doctor->experience_years = $request->get('experience_years');
+
+        if ($request->hasFile('photo')) {
+            if ($doctor->photo) {
+                Storage::disk('public')->delete($doctor->photo);
+            }
+            $doctor->photo = $request->file('photo')->store('doctors', 'public');
+        }
+
         $doctor->save();
 
         return redirect()->route('admin.doctors.index')->with('success', 'Doctor updated successfully.');
@@ -129,7 +158,7 @@ class DoctorController extends Controller
     public function getEditForm(Request $request)
     {
         $id = $request->id;
-        $data = Doctor::find($id);
+        $data = Doctor::with('user')->find($id);
         $users = User::all();
         $specializations = Specialization::all();
         return response()->json([
@@ -143,11 +172,25 @@ class DoctorController extends Controller
         $id = $request->id;
         $data = Doctor::find($id);
         $data->name = $request->name;
-        $data->email = $request->email;
         $data->specialization_id = $request->specialization_id;
-        $data->user_id = $request->user_id;
+        $data->phone = $request->phone;
+        $data->bio = $request->bio;
+        $data->experience_years = $request->experience_years;
+
+        if ($request->hasFile('photo')) {
+            if ($data->photo) {
+                Storage::disk('public')->delete($data->photo);
+            }
+            $data->photo = $request->file('photo')->store('doctors', 'public');
+        }
+
         $data->save();
-        return response()->json(['status' => 'oke', 'msg' => 'Doctor data is up-to-date!'], 200);
+
+        return response()->json([
+            'status' => 'oke',
+            'msg' => 'Doctor data is up-to-date!',
+            'photo_url' => $data->photo ? asset('storage/' . $data->photo) : null,
+        ], 200);
     }
 
     public function deleteData(Request $request)

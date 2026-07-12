@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
+use App\Models\User;
+use App\Models\Article;
+use App\Models\Booking;
+use App\Models\Consultation;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -11,7 +16,21 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        //
+        $doctorCount = Doctor::count();
+        $memberCount = User::where('role', 'member')->count();
+        $articleCount = Article::count();
+        $bookingCount = Booking::count();
+        $activeConsultationCount = Consultation::where('status', 'Aktif')->count();
+        $doneConsultationCount = Consultation::where('status', 'Selesai')->count();
+
+        return view('admin.dashboard.index', compact(
+            'doctorCount',
+            'memberCount',
+            'articleCount',
+            'bookingCount',
+            'activeConsultationCount',
+            'doneConsultationCount'
+        ));
     }
 
     /**

@@ -40,9 +40,14 @@
             <div class="lb-card h-100">
 
                 <div class="p-4">
+                    <?php if($doctor->photo): ?>
+                    <img src="<?php echo e(asset('storage/' . $doctor->photo)); ?>" alt="<?php echo e($doctor->name); ?>"
+                        class="rounded-circle mb-2" style="width:70px;height:70px;object-fit:cover;">
+                    <?php else: ?>
                     <div class="lb-card-icon">
                         <i class="bi bi-person-hearts"></i>
                     </div>
+                    <?php endif; ?>
 
                     <h5 class="card-title mb-1">
                         <?php echo e($doctor->name); ?>
@@ -54,10 +59,9 @@
 
                     </p>
 
-                    <p class="mb-0">
-                        <i class="bi bi-envelope me-1"></i><?php echo e($doctor->email ?? '-'); ?>
-
-                    </p>
+                    <a href="<?php echo e(route('member.doctors.show', $doctor->id)); ?>" class="btn btn-lb btn-sm">
+                        Lihat Profil
+                    </a>
                 </div>
 
             </div>
@@ -69,5 +73,5 @@
 
 </div>
 <?php $__env->stopSection(); ?>
-
+    
 <?php echo $__env->make('layouts.member', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\wfp\Project UTS\Project_WFP\resources\views/member/doctors/index.blade.php ENDPATH**/ ?>
