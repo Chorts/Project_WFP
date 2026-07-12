@@ -20,7 +20,7 @@
 
     <div class="card mb-3">
         <div class="card-body">
-            <h4>Konsultasi dengan <?php echo e($consultation->doctor->name); ?></h4>
+            <h4>Konsultasi dengan <?php echo e($consultation->user->name); ?></h4>
             <p>
                 Status: <b><?php echo e($consultation->status); ?></b>
             </p>
@@ -28,14 +28,14 @@
     </div>
 
     <div class="card mb-3">
-        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+        <div class="card-body" id="chat" style="max-height: 400px; overflow-y: auto;">
 
             <?php $__empty_1 = true; $__currentLoopData = $chats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-            <div class="mb-2 d-flex <?php echo e($chat->tipe_sender === 'user' ? 'justify-content-end' : 'justify-content-start'); ?>">
-                <div class="p-2 rounded <?php echo e($chat->tipe_sender === 'user' ? 'bg-primary text-white' : 'bg-light'); ?>" style="max-width: 70%;">
+            <div class="mb-2 d-flex <?php echo e($chat->tipe_sender === 'doctor' ? 'justify-content-end' : 'justify-content-start'); ?>">
+                <div class="p-2 rounded <?php echo e($chat->tipe_sender === 'doctor' ? 'bg-primary text-white' : 'bg-light'); ?>" style="max-width: 70%;">
                     <div><?php echo e($chat->chat); ?></div>
                     <small class="d-block text-end" style="opacity: 0.7;">
-                        <?php echo e($chat->created_at); ?>
+                        <?php echo e($chat->created_at->format('d M Y H:i')); ?>
 
                     </small>
                 </div>
@@ -65,4 +65,45 @@
 
 </div>
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startPush('script'); ?>
+<script>
+    $(function() {
+        var cont = document.getElementById('chat');
+        cont.scrollTop = cont.scrollHeight;
+    });
+    var idLast = <?php echo e($chats->isNotEmpty() && $chats->last()->id); ?>;
+    var consId = <?php echo e($consultation->id); ?>;
+    <?php if($consultation && $consultation->status === "Aktif"): ?>
+    setInterval(function() {
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo e(route("chat.baca")); ?>',
+            data: {
+                'consId': consId,
+                'idLast': idLast
+            },
+            success: function(data) {
+                if (data.status == 'oke' && data.chats.length > 0) {
+                    $.each(data.chats, function(i, chat) {
+                        var doctor = chat.tipe_sender === 'doctor';
+                        var align = doctor ? 'justify-content-end' : 'justify-content-start';
+                        var chatBubble = doctor ? 'bg-primary text-white' : 'bg-light';
+
+                        var waktu = new Date(chat.created_at).toLocaleString('id-ID'));
+
+                        $('#chat').append('<div class="mb-2 d-flex ' + align + '">' +
+                            '<div class="p-2 rounded ' + chatBubble + '" style="max-width: 70%;">' +
+                            '<div>' + chat.chat + '</div>' + '<small class="d-block text-end" style="opacity: 0.7;">' + waktu + '</small>' + '</div></div>');
+                        idLast = chat.id;
+                    });
+                    var cont = document.getElementById('chat');
+                    cont.scrollTop = cont.scrollHeight;
+                }
+            }
+        })
+    }, 3000);
+    <?php endif; ?>
+</script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.adminlte4', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\baru\Project_WFP\resources\views/doctor/consultations/show.blade.php ENDPATH**/ ?>
