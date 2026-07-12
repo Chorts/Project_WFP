@@ -8,16 +8,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    
 
     use AuthenticatesUsers;
 
@@ -43,7 +34,7 @@ class LoginController extends Controller
     {
         switch ($user->role) {
             case 'admin':
-                return redirect()->route('admin.doctors.index');
+                return redirect()->route('admin.dashboard');
             case 'doctor':
                 return redirect()->route('doctor.bookings.index');
             case 'member':

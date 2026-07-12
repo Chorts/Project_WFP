@@ -86,6 +86,12 @@ class ConsultationController extends Controller
     {
         $booking = Booking::findorfail($id);
 
+        $consultation = Consultation::where('booking_id', $booking->id)->first();
+        if ($consultation) {
+            return redirect()->route('member.consultations.show', $consultation->id)
+            ->with('success', 'Konsultasi untuk booking ini sudah pernah dimulai');
+        }
+        
         $consultation = new Consultation();
         $consultation->user_id = auth()->id();
         $consultation->booking_id = $booking->id;
@@ -104,6 +110,7 @@ class ConsultationController extends Controller
 
         $consultation = Consultation::where("id", $id)->where("doctor_id", $doctor->id)->where("status", "Aktif")->first();
         if ($consultation) {
+            $consultation->ringkasan = request()->ringkasan;
             $consultation->status = "Selesai";
             $consultation->ended_at = now();
             $consultation->save();

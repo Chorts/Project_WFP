@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $doctorCount = Doctor::count();
@@ -23,13 +21,36 @@ class AdminDashboardController extends Controller
         $activeConsultationCount = Consultation::where('status', 'Aktif')->count();
         $doneConsultationCount = Consultation::where('status', 'Selesai')->count();
 
+        
+        $todayPatientCount = Consultation::whereDate('created_at', today())->count();//itung jmlh pasien hr ini :)
+        $rangeDays = 7; //jarak grafik (hari) :)
+
+        $consultationsPerDay = Consultation::selectRaw('DATE(created_at) as tanggal, COUNT(*) as jumlah')
+            ->where('created_at', '>=', now()->subDays($rangeDays - 1)->startOfDay())
+            ->groupBy('tanggal')
+            ->pluck('jumlah', 'tanggal');
+
+        $chartLabels = [];
+        $chartData = [];
+
+        for ($i = $rangeDays - 1; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $key = $date->toDateString();
+
+            $chartLabels[] = $date->translatedFormat('d M');
+            $chartData[] = (int) ($consultationsPerDay[$key] ?? 0);
+        }
+
         return view('admin.dashboard.index', compact(
             'doctorCount',
             'memberCount',
             'articleCount',
             'bookingCount',
             'activeConsultationCount',
-            'doneConsultationCount'
+            'doneConsultationCount',
+            'todayPatientCount',
+            'chartLabels',
+            'chartData'
         ));
     }
 

@@ -27,4 +27,8 @@ class Booking extends Model
     {
         return $this->belongsTo(DoctorSchedule::class, 'schedule_id');
     }
+    public function consultation()
+    {
+        return $this->hasOne(Consultation::class, 'booking_id');
+    }
 }

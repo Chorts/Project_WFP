@@ -59,7 +59,7 @@ class BookingController extends Controller
 
     public function memberIndex()
     {
-        $bookings = Booking::where('user_id', auth()->id())->where("status", "Dipesan")->with(['schedule.doctor'])->get();
+        $bookings = Booking::where('user_id', auth()->id())->where("status", "Dipesan")->with(['schedule.doctor', 'consultation'])->get();
         $schedules = DoctorSchedule::with('doctor')
             ->get()
             ->map(function ($schedule) {

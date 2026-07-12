@@ -1,18 +1,18 @@
-@extends('layouts.adminlte4')
-@section('sidebar-dashboard')
+
+<?php $__env->startSection('sidebar-dashboard'); ?>
 active
-@endsection
-@section('title')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?>
 Dashboard
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <div class="container">
-    @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-    @if (session('status'))
-    <div class="alert alert-warning">{{ session('status') }}</div>
-    @endif
+    <?php if(session('success')): ?>
+    <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+    <?php endif; ?>
+    <?php if(session('status')): ?>
+    <div class="alert alert-warning"><?php echo e(session('status')); ?></div>
+    <?php endif; ?>
 
     <h3 class="mb-3">Dashboard Administrator</h3>
 
@@ -21,7 +21,7 @@ Dashboard
             <div class="card text-white bg-primary">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Dokter</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $doctorCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($doctorCount); ?></p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ Dashboard
             <div class="card text-white bg-success">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Member</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $memberCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($memberCount); ?></p>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@ Dashboard
             <div class="card text-white bg-info">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Artikel Kesehatan</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $articleCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($articleCount); ?></p>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ Dashboard
             <div class="card text-white bg-warning">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Janji Temu (Appointment)</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $bookingCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($bookingCount); ?></p>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@ Dashboard
             <div class="card text-white bg-secondary">
                 <div class="card-body">
                     <h5 class="card-title">Konsultasi Berlangsung</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $activeConsultationCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($activeConsultationCount); ?></p>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@ Dashboard
             <div class="card text-white bg-dark">
                 <div class="card-body">
                     <h5 class="card-title">Konsultasi Selesai</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $doneConsultationCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($doneConsultationCount); ?></p>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@ Dashboard
             <div class="card text-white bg-danger">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Pasien Hari Ini</h5>
-                    <p class="card-text" style="font-size: 2rem; font-weight: bold;">{{ $todayPatientCount }}</p>
+                    <p class="card-text" style="font-size: 2rem; font-weight: bold;"><?php echo e($todayPatientCount); ?></p>
                 </div>
             </div>
         </div>
@@ -92,9 +92,9 @@ Dashboard
             </div>
         </div>
     </div>
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-    @push('script')
+    <?php $__env->startPush('script'); ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const patientChartOptions = {
@@ -105,10 +105,10 @@ Dashboard
                 },
                 series: [{
                     name: 'Jumlah Pasien',
-                    data: @json($chartData),
+                    data: <?php echo json_encode($chartData, 15, 512) ?>,
                 }],
                 xaxis: {
-                    categories: @json($chartLabels),
+                    categories: <?php echo json_encode($chartLabels, 15, 512) ?>,
                 },
                 dataLabels: { enabled: false },
                 stroke: { curve: 'smooth', width: 2 },
@@ -131,4 +131,5 @@ Dashboard
             patientChart.render();
         });
     </script>
-    @endpush
+    <?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.adminlte4', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\enric\OneDrive\Desktop\Kuliah\Semester 6\WFP\Project_WFP\resources\views/admin/dashboard/index.blade.php ENDPATH**/ ?>

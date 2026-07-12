@@ -1,9 +1,9 @@
-@extends('layouts.member')
 
-@section('title', 'Booking Saya')
-@section('nav-bookings', 'active')
 
-@section('content')
+<?php $__env->startSection('title', 'Booking Saya'); ?>
+<?php $__env->startSection('nav-bookings', 'active'); ?>
+
+<?php $__env->startSection('content'); ?>
 
 <div class="lb-page-header">
     <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
@@ -19,14 +19,14 @@
 
 <div class="container mb-5">
 
-    @if($bookings->isEmpty())
+    <?php if($bookings->isEmpty()): ?>
 
     <div class="lb-empty">
         <i class="bi bi-calendar-x fs-1 d-block mb-2"></i>
         Anda belum memiliki booking konsultasi.
     </div>
 
-    @else
+    <?php else: ?>
 
     <div class="table-responsive lb-table">
         <table class="table mb-0 align-middle">
@@ -40,50 +40,51 @@
             </thead>
 
             <tbody>
-                @foreach($bookings as $booking)
+                <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td>
                         <i class="bi bi-person-badge me-1" style="color: var(--lb-primary-dark);"></i>
-                        {{ $booking->schedule->doctor->name ?? '-' }}
+                        <?php echo e($booking->schedule->doctor->name ?? '-'); ?>
+
                     </td>
-                    <td>{{ $booking->booking_date }}</td>
+                    <td><?php echo e($booking->booking_date); ?></td>
                     <td>
-                        @php
+                        <?php
                         $statusClass = match(true) {
                         str_contains(strtolower($booking->status ?? ''), 'aktif') => 'lb-badge-active',
                         str_contains(strtolower($booking->status ?? ''), 'selesai') => 'lb-badge-done',
                         default => 'lb-badge-wait',
                         };
-                        @endphp
-                        <span class="lb-badge {{ $statusClass }}">{{ $booking->status ?? 'Menunggu' }}</span>
+                        ?>
+                        <span class="lb-badge <?php echo e($statusClass); ?>"><?php echo e($booking->status ?? 'Menunggu'); ?></span>
                     </td>
                     <td>
-                        @if($booking->consultation)
-                        <a href="{{ route('member.consultations.show', $booking->consultation->id) }}" class="btn btn-lb-outline btn-sm">
+                        <?php if($booking->consultation): ?>
+                        <a href="<?php echo e(route('member.consultations.show', $booking->consultation->id)); ?>" class="btn btn-lb-outline btn-sm">
                             Lanjutkan Konsultasi
                         </a>
-                        @else
-                        <form action="{{ route('member.consultations.store', $booking->id) }}" method="POST">
-                            @csrf
+                        <?php else: ?>
+                        <form action="<?php echo e(route('member.consultations.store', $booking->id)); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <button type="submit" class="btn btn-lb btn-sm">
                                 Mulai Konsultasi
                             </button>
                         </form>
-                        @endif
+                        <?php endif; ?>
                     </td>
                 </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
 
         </table>
     </div>
 
-    @endif
+    <?php endif; ?>
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script')
+<?php $__env->startPush('script'); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const DAY_NAMES = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -192,30 +193,30 @@
         resetSchedule();
     });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('modals')
-{{-- Modal Create Booking --}}
+<?php $__env->startPush('modals'); ?>
+
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ route('member.bookings.store') }}">
+        <form method="POST" action="<?php echo e(route('member.bookings.store')); ?>">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: var(--lb-topbar); color: #fff;">
                     <h4 class="modal-title lb-serif" style="color: #fff;">Booking Konsultasi</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    @csrf
+                    <?php echo csrf_field(); ?>
 
-                    @if ($errors->any())
+                    <?php if($errors->any()): ?>
                     <div class="alert alert-danger">
                         <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
-                    @endif
+                    <?php endif; ?>
 
                     <div class="form-group mb-3">
                         <label class="form-label lb-meta">Tanggal Booking</label>
@@ -223,16 +224,16 @@
                             class="form-control lb-form-control"
                             name="booking_date"
                             id="inputBookingDate"
-                            min="{{ now()->toDateString() }}">
+                            min="<?php echo e(now()->toDateString()); ?>">
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label lb-meta">Dokter</label>
                         <select class="form-control lb-form-control" id="selectDoctor" disabled>
                             <option value="">Pilih tanggal terlebih dahulu</option>
-                            @foreach($schedules->pluck('doctor')->unique('id') as $doctor)
-                            <option value="{{ $doctor->id }}" data-doctor-option hidden>{{ $doctor->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $schedules->pluck('doctor')->unique('id'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($doctor->id); ?>" data-doctor-option hidden><?php echo e($doctor->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <small class="text-muted d-none" id="noDoctorNotice">Tidak ada dokter yang tersedia pada tanggal ini.</small>
                     </div>
@@ -241,17 +242,18 @@
                         <label class="form-label lb-meta">Sesi (Hari & Jam)</label>
                         <select class="form-control lb-form-control" name="schedule_id" id="selectSchedule" disabled>
                             <option value="">Pilih dokter terlebih dahulu</option>
-                            @foreach($schedules as $schedule)
+                            <?php $__currentLoopData = $schedules; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $schedule): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option
-                                value="{{ $schedule->id }}"
-                                data-doctor-id="{{ $schedule->doctor_id }}"
-                                data-day="{{ $schedule->day }}"
-                                data-booked-dates="{{ $schedule->booked_dates->implode(',') }}"
+                                value="<?php echo e($schedule->id); ?>"
+                                data-doctor-id="<?php echo e($schedule->doctor_id); ?>"
+                                data-day="<?php echo e($schedule->day); ?>"
+                                data-booked-dates="<?php echo e($schedule->booked_dates->implode(',')); ?>"
                                 hidden>
-                                {{ $schedule->day }}
-                                ({{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}-{{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }})
+                                <?php echo e($schedule->day); ?>
+
+                                (<?php echo e(\Carbon\Carbon::parse($schedule->start_time)->format('H:i')); ?>-<?php echo e(\Carbon\Carbon::parse($schedule->end_time)->format('H:i')); ?>)
                             </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <small class="text-muted d-none" id="noScheduleNotice">Tidak ada sesi tersedia untuk dokter & tanggal ini.</small>
                     </div>
@@ -266,4 +268,5 @@
         </form>
     </div>
 </div>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.member', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\enric\OneDrive\Desktop\Kuliah\Semester 6\WFP\Project_WFP\resources\views/member/bookings/index.blade.php ENDPATH**/ ?>
