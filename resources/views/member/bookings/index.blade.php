@@ -77,6 +77,85 @@
 </div>
 @endsection
 
+@push('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const DAY_NAMES = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+        const doctorSelect = document.getElementById('selectDoctor');
+        const dateInput = document.getElementById('inputBookingDate');
+        const scheduleSelect = document.getElementById('selectSchedule');
+        const noScheduleNotice = document.getElementById('noScheduleNotice');
+
+        if (!doctorSelect || !dateInput || !scheduleSelect) return;
+
+        const schedulePlaceholder = scheduleSelect.querySelector('option[value=""]');
+        const scheduleOptions = scheduleSelect.querySelectorAll('option[data-doctor-id]');
+
+        function resetDate() {
+            dateInput.value = '';
+            dateInput.disabled = true;
+        }
+
+        function resetSchedule(message) {
+            scheduleOptions.forEach(opt => opt.hidden = true);
+            scheduleSelect.disabled = true;
+            scheduleSelect.value = '';
+            schedulePlaceholder.hidden = false;
+            schedulePlaceholder.textContent = message || 'Pilih dokter & tanggal terlebih dahulu';
+            noScheduleNotice.classList.add('d-none');
+        }
+
+        // Step A: pilih Dokter -> aktifkan Tanggal, reset Sesi.
+        doctorSelect.addEventListener('change', function() {
+            resetDate();
+            resetSchedule();
+
+            if (doctorSelect.value) {
+                dateInput.disabled = false;
+            }
+        });
+
+        // Step B: pilih Tanggal -> filter Sesi: dokter cocok + hari cocok + belum dipesan di tanggal itu.
+        dateInput.addEventListener('change', function() {
+            if (!dateInput.value) {
+                resetSchedule();
+                return;
+            }
+
+            const doctorId = doctorSelect.value;
+            const dayIndex = new Date(dateInput.value + 'T00:00:00').getDay();
+            const selectedDayName = DAY_NAMES[dayIndex];
+
+            let visibleCount = 0;
+
+            scheduleOptions.forEach(opt => {
+                const bookedDates = (opt.dataset.bookedDates || '')
+                    .split(',')
+                    .filter(Boolean);
+
+                const isAvailable = opt.dataset.doctorId === doctorId &&
+                    opt.dataset.day === selectedDayName &&
+                    !bookedDates.includes(dateInput.value);
+
+                opt.hidden = !isAvailable;
+                if (isAvailable) visibleCount++;
+            });
+
+            scheduleSelect.disabled = visibleCount === 0;
+            scheduleSelect.value = '';
+            schedulePlaceholder.hidden = visibleCount > 0;
+            schedulePlaceholder.textContent = 'Pilih sesi';
+            noScheduleNotice.classList.toggle('d-none', visibleCount > 0);
+        });
+
+        // State awal saat modal dibuka.
+        resetDate();
+        resetSchedule();
+    });
+</script>
+@endpush
+
 @push('modals')
 {{-- Modal Create Booking --}}
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
@@ -101,20 +180,42 @@
                     @endif
 
                     <div class="form-group mb-3">
-                        <label class="form-label lb-meta">Jadwal</label>
-                        <select class="form-control lb-form-control" name="schedule_id" id="selectSchedule">
-                            @foreach($schedules as $schedule)
-                            <option value="{{ $schedule->id }}">
-                                {{ $schedule->doctor->name ?? '' }}
-                                - {{ $schedule->day }}
-                            </option>
+                        <label class="form-label lb-meta">Dokter</label>
+                        <select class="form-control lb-form-control" id="selectDoctor">
+                            <option value="">Pilih dokter</option>
+                            @foreach($schedules->pluck('doctor')->unique('id') as $doctor)
+                            <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-3">
                         <label class="form-label lb-meta">Tanggal Booking</label>
-                        <input type="date" class="form-control lb-form-control" name="booking_date">
+                        <input type="date"
+                            class="form-control lb-form-control"
+                            name="booking_date"
+                            id="inputBookingDate"
+                            min="{{ now()->toDateString() }}"
+                            disabled>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label class="form-label lb-meta">Sesi (Hari & Jam)</label>
+                        <select class="form-control lb-form-control" name="schedule_id" id="selectSchedule" disabled>
+                            <option value="">Pilih dokter & tanggal terlebih dahulu</option>
+                            @foreach($schedules as $schedule)
+                            <option
+                                value="{{ $schedule->id }}"
+                                data-doctor-id="{{ $schedule->doctor_id }}"
+                                data-day="{{ $schedule->day }}"
+                                data-booked-dates="{{ $schedule->booked_dates->implode(',') }}"
+                                hidden>
+                                {{ $schedule->day }}
+                                ({{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}-{{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }})
+                            </option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted d-none" id="noScheduleNotice">Tidak ada sesi tersedia untuk dokter & tanggal ini.</small>
                     </div>
 
                     <input type="hidden" name="status" value="menunggu">

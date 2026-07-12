@@ -60,7 +60,16 @@ class BookingController extends Controller
     public function memberIndex()
     {
         $bookings = Booking::where('user_id', auth()->id())->where("status", "Dipesan")->with(['schedule.doctor'])->get();
-        $schedules = DoctorSchedule::with('doctor')->get();
+        $schedules = DoctorSchedule::with('doctor')
+            ->get()
+            ->map(function ($schedule) {
+                $schedule->booked_dates = $schedule->bookings()
+                    ->where('status', 'Dipesan')
+                    ->pluck('booking_date')
+                    ->map(fn($date) => \Carbon\Carbon::parse($date)->format('Y-m-d'))
+                    ->values();
+                return $schedule;
+            });
 
         return view('member.bookings.index', compact('bookings', 'schedules'));
     }
@@ -89,20 +98,54 @@ class BookingController extends Controller
 
     public function memberStore(Request $request)
     {
+        $request->validate([
+            'schedule_id' => 'required|exists:doctor_schedules,id',
+            'booking_date' => 'required|date|after_or_equal:today',
+        ]);
+
+        $schedule = DoctorSchedule::findOrFail($request->get('schedule_id'));
+        $bookingDate = $request->get('booking_date');
+
+        // Pastikan tanggal yang dipilih memang jatuh pada hari sesuai jadwal (sesi) yang dipilih.
+        $dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        $selectedDay = $dayNames[\Carbon\Carbon::parse($bookingDate)->dayOfWeek];
+
+        if ($selectedDay !== $schedule->day) {
+            return back()
+                ->withInput()
+                ->withErrors(['booking_date' => 'Tanggal yang dipilih tidak sesuai dengan hari pada jadwal (' . $schedule->day . ').']);
+        }
+
+        // Pastikan sesi pada tanggal tersebut belum dipesan member lain (mencegah bentrok/double booking).
+        $isTaken = Booking::where('schedule_id', $schedule->id)
+            ->where('booking_date', $bookingDate)
+            ->where('status', 'Dipesan')
+            ->exists();
+
+        if ($isTaken) {
+            return back()
+                ->withInput()
+                ->withErrors(['schedule_id' => 'Jadwal ini sudah dipesan pada tanggal tersebut. Silakan pilih jadwal atau tanggal lain.']);
+        }
+
         $booking = new Booking();
         $booking->user_id = auth()->id();
-        $booking->schedule_id = $request->get('schedule_id');
+        $booking->schedule_id = $schedule->id;
         $booking->status = "Dipesan";
-        $booking->booking_date = $request->get('booking_date');
+        $booking->booking_date = $bookingDate;
         $booking->save();
 
         return redirect()->route('member.bookings.index')
             ->with('success', 'Booking created successfully.');
     }
 
-    public function start() {}
+    public function start()
+    {
+    }
 
-    public function close() {}
+    public function close()
+    {
+    }
     /**
      * Display the specified resource.
      */
@@ -130,7 +173,9 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Booking $booking) {}
+    public function destroy(Booking $booking)
+    {
+    }
 
     public function getEditForm(Request $request)
     {
