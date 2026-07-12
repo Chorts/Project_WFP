@@ -37,7 +37,7 @@ class UserController extends Controller
         $user->role = $request->get('role');
         $user->save();
 
-        return redirect()->route('adamin.users.index')->with('success', 'User created successfully.');
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
     /**

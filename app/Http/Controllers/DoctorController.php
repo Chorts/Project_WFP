@@ -18,7 +18,7 @@ class DoctorController extends Controller
     {
         $allDoctors = Doctor::with('specialization')->get();
         $specializations = Specialization::all();
-        $users = User::all();
+        $users = User::where('role', '!=', 'doctor')->get();
         return view('admin.doctors.index', ['doctors' => $allDoctors, 'specializations' => $specializations, 'users' => $users]);
     }
 
@@ -68,16 +68,19 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User();
-        $user->name = "Dr." . $request->get('name');
-        $user->email = $request->get('email');
-        $user->password = Hash::make('12345678');
+        // $user = new User();
+        // $user->name = "Dr." . $request->get('name');
+        // $user->email = $request->get('email');
+        // $user->password = Hash::make('12345678');
+        // $user->role = 'doctor';
+        // $user->save();
+
+        $user = User::find($request->get('user_id'));
         $user->role = 'doctor';
         $user->save();
 
         $doctor = new Doctor();
-        $doctor->name = $request->get('name');
-        $doctor->email = $request->get('email');
+        $doctor->name = "Dr. " . $user->name;
         $doctor->specialization_id = $request->get('specialization_id');
         $doctor->user_id = $user->id;
         $doctor->save();
