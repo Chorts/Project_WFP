@@ -25,6 +25,7 @@
                 <th>Dokter</th>
                 <th>Pasien</th>
                 <th>Status</th>
+                <th>Tanggal Booking</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Chat</th>
@@ -41,6 +42,7 @@
                 <td>{{ $consultation->doctor->name ?? '-' }}</td>
                 <td>{{ $consultation->user->name ?? '-' }}</td>
                 <td>{{ $consultation->status ?? '-' }}</td>
+                <td>{{ $consultation->booking->booking_date ?? '-' }}</td>
                 <td>{{ $consultation->started_at ?? '-' }}</td>
                 <td>{{ $consultation->ended_at ?? '-' }}</td>
                 <td>
@@ -71,9 +73,11 @@
                 <td>
                     @if($consultation->ringkasan != "")
                     {{ $consultation->ringkasan ?? '-' }}
-                    @endif
-
+                    
+                    @else
+                    
                     Belum tersedia
+                    @endif
                 </td>
             </tr>
             @endforeach

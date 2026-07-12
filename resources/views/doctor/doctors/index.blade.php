@@ -41,7 +41,7 @@ Doctors
             <tr id="tr_{{ $doctor->id }}">
                 <td id="td_id_{{ $doctor->id }}">{{ $doctor->id }}</td>
                 <td id="td_name_{{ $doctor->id }}">{{ $doctor->name }}</td>
-                <td id="td_email_{{ $doctor->id }}">{{ $doctor->email }}</td>
+                <td id="td_email_{{ $doctor->id }}">{{ $doctor->user->email }}</td>
                 <td id="td_specialization_{{ $doctor->id }}">{{ $doctor->specialization_id }} -
                     {{ $doctor->specialization->name }}
                 </td>
