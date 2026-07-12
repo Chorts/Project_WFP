@@ -81,19 +81,35 @@
     document.addEventListener('DOMContentLoaded', function() {
         const DAY_NAMES = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-        const doctorSelect = document.getElementById('selectDoctor');
         const dateInput = document.getElementById('inputBookingDate');
+        const doctorSelect = document.getElementById('selectDoctor');
         const scheduleSelect = document.getElementById('selectSchedule');
+        const noDoctorNotice = document.getElementById('noDoctorNotice');
         const noScheduleNotice = document.getElementById('noScheduleNotice');
 
-        if (!doctorSelect || !dateInput || !scheduleSelect) return;
+        if (!dateInput || !doctorSelect || !scheduleSelect) return;
+
+        const doctorPlaceholder = doctorSelect.querySelector('option[value=""]');
+        const doctorOptions = doctorSelect.querySelectorAll('option[data-doctor-option]');
 
         const schedulePlaceholder = scheduleSelect.querySelector('option[value=""]');
         const scheduleOptions = scheduleSelect.querySelectorAll('option[data-doctor-id]');
 
-        function resetDate() {
-            dateInput.value = '';
-            dateInput.disabled = true;
+        function isScheduleAvailable(opt, selectedDate, selectedDayName) {
+            const bookedDates = (opt.dataset.bookedDates || '')
+                .split(',')
+                .filter(Boolean);
+
+            return opt.dataset.day === selectedDayName && !bookedDates.includes(selectedDate);
+        }
+
+        function resetDoctor(message) {
+            doctorOptions.forEach(opt => opt.hidden = true);
+            doctorSelect.disabled = true;
+            doctorSelect.value = '';
+            doctorPlaceholder.hidden = false;
+            doctorPlaceholder.textContent = message || 'Pilih tanggal terlebih dahulu';
+            noDoctorNotice.classList.add('d-none');
         }
 
         function resetSchedule(message) {
@@ -101,44 +117,60 @@
             scheduleSelect.disabled = true;
             scheduleSelect.value = '';
             schedulePlaceholder.hidden = false;
-            schedulePlaceholder.textContent = message || 'Pilih dokter & tanggal terlebih dahulu';
+            schedulePlaceholder.textContent = message || 'Pilih dokter terlebih dahulu';
             noScheduleNotice.classList.add('d-none');
         }
 
-        // Step A: pilih Dokter -> aktifkan Tanggal, reset Sesi.
-        doctorSelect.addEventListener('change', function() {
-            resetDate();
+        // Step A: pilih Tanggal -> filter Dokter: hanya dokter yang punya sesi
+        // cocok hari tsb dan belum penuh di tanggal itu.
+        dateInput.addEventListener('change', function() {
             resetSchedule();
 
-            if (doctorSelect.value) {
-                dateInput.disabled = false;
+            if (!dateInput.value) {
+                resetDoctor();
+                return;
             }
+
+            const dayIndex = new Date(dateInput.value + 'T00:00:00').getDay();
+            const selectedDayName = DAY_NAMES[dayIndex];
+
+            const availableDoctorIds = new Set();
+            scheduleOptions.forEach(opt => {
+                if (isScheduleAvailable(opt, dateInput.value, selectedDayName)) {
+                    availableDoctorIds.add(opt.dataset.doctorId);
+                }
+            });
+
+            let visibleCount = 0;
+            doctorOptions.forEach(opt => {
+                const matches = availableDoctorIds.has(opt.value);
+                opt.hidden = !matches;
+                if (matches) visibleCount++;
+            });
+
+            doctorSelect.disabled = visibleCount === 0;
+            doctorSelect.value = '';
+            doctorPlaceholder.hidden = visibleCount > 0;
+            doctorPlaceholder.textContent = 'Pilih dokter';
+            noDoctorNotice.classList.toggle('d-none', visibleCount > 0);
         });
 
-        // Step B: pilih Tanggal -> filter Sesi: dokter cocok + hari cocok + belum dipesan di tanggal itu.
-        dateInput.addEventListener('change', function() {
-            if (!dateInput.value) {
+        // Step B: pilih Dokter -> filter Sesi milik dokter itu yang available di tanggal terpilih.
+        doctorSelect.addEventListener('change', function() {
+            if (!doctorSelect.value) {
                 resetSchedule();
                 return;
             }
 
-            const doctorId = doctorSelect.value;
             const dayIndex = new Date(dateInput.value + 'T00:00:00').getDay();
             const selectedDayName = DAY_NAMES[dayIndex];
 
             let visibleCount = 0;
-
             scheduleOptions.forEach(opt => {
-                const bookedDates = (opt.dataset.bookedDates || '')
-                    .split(',')
-                    .filter(Boolean);
-
-                const isAvailable = opt.dataset.doctorId === doctorId &&
-                    opt.dataset.day === selectedDayName &&
-                    !bookedDates.includes(dateInput.value);
-
-                opt.hidden = !isAvailable;
-                if (isAvailable) visibleCount++;
+                const matches = opt.dataset.doctorId === doctorSelect.value &&
+                    isScheduleAvailable(opt, dateInput.value, selectedDayName);
+                opt.hidden = !matches;
+                if (matches) visibleCount++;
             });
 
             scheduleSelect.disabled = visibleCount === 0;
@@ -149,7 +181,7 @@
         });
 
         // State awal saat modal dibuka.
-        resetDate();
+        resetDoctor();
         resetSchedule();
     });
 </script>
@@ -179,29 +211,29 @@
                     <?php endif; ?>
 
                     <div class="form-group mb-3">
-                        <label class="form-label lb-meta">Dokter</label>
-                        <select class="form-control lb-form-control" id="selectDoctor">
-                            <option value="">Pilih dokter</option>
-                            <?php $__currentLoopData = $schedules->pluck('doctor')->unique('id'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($doctor->id); ?>"><?php echo e($doctor->name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-3">
                         <label class="form-label lb-meta">Tanggal Booking</label>
                         <input type="date"
                             class="form-control lb-form-control"
                             name="booking_date"
                             id="inputBookingDate"
-                            min="<?php echo e(now()->toDateString()); ?>"
-                            disabled>
+                            min="<?php echo e(now()->toDateString()); ?>">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label lb-meta">Dokter</label>
+                        <select class="form-control lb-form-control" id="selectDoctor" disabled>
+                            <option value="">Pilih tanggal terlebih dahulu</option>
+                            <?php $__currentLoopData = $schedules->pluck('doctor')->unique('id'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($doctor->id); ?>" data-doctor-option hidden><?php echo e($doctor->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                        <small class="text-muted d-none" id="noDoctorNotice">Tidak ada dokter yang tersedia pada tanggal ini.</small>
                     </div>
 
                     <div class="form-group mb-2">
                         <label class="form-label lb-meta">Sesi (Hari & Jam)</label>
                         <select class="form-control lb-form-control" name="schedule_id" id="selectSchedule" disabled>
-                            <option value="">Pilih dokter & tanggal terlebih dahulu</option>
+                            <option value="">Pilih dokter terlebih dahulu</option>
                             <?php $__currentLoopData = $schedules; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $schedule): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option
                                 value="<?php echo e($schedule->id); ?>"

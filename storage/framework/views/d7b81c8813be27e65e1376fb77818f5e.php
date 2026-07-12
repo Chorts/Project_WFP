@@ -28,16 +28,19 @@
 <body> -->
 
 <?php $__env->startSection('content'); ?>
-    <a href="articles" class="btn">Articles</a><br>
-    <a href="services" class="btn btn-primary">Services</a><br>
-    <a href="doctors" class="btn btn-primary">Doctors</a><br>
-    <a href="transactions" class="btn btn-primary">Transactions</a><br>
-    <a href="schedules" class="btn btn-primary">Schedules</a><br>
-    <a href="bookings" class="btn btn-primary">Booking</a><br>
-    <a href="users" class="btn btn-primary">Users</a><br>
-    <a href="chats" class="btn btn-primary">Chats</a><br>
+    <div class="container"> 
+        <a href="articles" class="btn btn-primary">Articles</a><br>
+        <a href="services" class="btn btn-primary">Services</a><br>
+        <a href="doctors" class="btn btn-primary">Doctors</a><br>
+        <a href="transactions" class="btn btn-primary">Transactions</a><br>
+        <a href="schedules" class="btn btn-primary">Schedules</a><br>
+        <a href="bookings" class="btn btn-primary">Booking</a><br>
+        <a href="users" class="btn btn-primary">Users</a><br>
+        <a href="chats" class="btn btn-primary">Chats</a><br>
+    </div>
+
     <!-- </body>
 
-    </html> -->
+        </html> -->
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make("layouts.adminlte4", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\wfp\Project UTS\Project_WFP\resources\views/welcome.blade.php ENDPATH**/ ?>

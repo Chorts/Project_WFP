@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
-    
     <link href="<?php echo e(asset('assets/libra/css/libra-theme.css')); ?>" rel="stylesheet">
 
     <?php echo $__env->yieldPushContent('styles'); ?>
@@ -18,7 +17,6 @@
 
 <body>
 
-    
     <div class="lb-topbar py-1">
         <div class="container d-flex justify-content-between align-items-center">
             <span><i class="bi bi-telephone me-1"></i> 0800-1-VITA | <i class="bi bi-envelope ms-2 me-1"></i> hello@vitaguard.id</span>
@@ -131,7 +129,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <?php echo $__env->yieldPushContent('scripts'); ?>
+    <?php echo $__env->yieldPushContent('script'); ?>
     <?php echo $__env->yieldPushContent('modals'); ?>
 </body>
 
