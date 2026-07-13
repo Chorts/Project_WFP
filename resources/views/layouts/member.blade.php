@@ -19,7 +19,7 @@
 
     <div class="lb-topbar py-1">
         <div class="container d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-telephone me-1"></i> 0800-1-VITA | <i class="bi bi-envelope ms-2 me-1"></i> hello@vitaguard.id</span>
+            <span><i class="bi bi-telephone me-1"></i> 0800-1234-5678 | <i class="bi bi-envelope ms-2 me-1"></i> hello@vitaguard.id</span>
             <span class="d-none d-md-inline">Selamat datang, {{ Auth::user()->name }}</span>
         </div>
     </div>

@@ -23,13 +23,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/', function () {
-    //     return view('welcome');
-    // });
-    // Route::get('/myprofile', function () {
-    //     return view('about-me');
-    // });
-
     Route::get('/', function () {
         $user = auth()->user();
 
