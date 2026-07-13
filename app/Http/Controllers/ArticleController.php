@@ -144,7 +144,7 @@ class ArticleController extends Controller
             $data->delete();
             return response()->json([
                 'status' => 'oke',
-                'msg' => 'Service <b>' . $data->title . '</b> berhasil dihapus!'
+                'msg' => 'Article <b>' . $data->title . '</b> berhasil dihapus!'
             ], 200);
         } catch (\PDOException $ex) {
             return response()->json([
