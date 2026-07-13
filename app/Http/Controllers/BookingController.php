@@ -106,7 +106,6 @@ class BookingController extends Controller
         $schedule = DoctorSchedule::findOrFail($request->get('schedule_id'));
         $bookingDate = $request->get('booking_date');
 
-        // Pastikan tanggal yang dipilih memang jatuh pada hari sesuai jadwal (sesi) yang dipilih.
         $dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
         $selectedDay = $dayNames[\Carbon\Carbon::parse($bookingDate)->dayOfWeek];
 
@@ -116,7 +115,6 @@ class BookingController extends Controller
                 ->withErrors(['booking_date' => 'Tanggal yang dipilih tidak sesuai dengan hari pada jadwal (' . $schedule->day . ').']);
         }
 
-        // Pastikan sesi pada tanggal tersebut belum dipesan member lain (mencegah bentrok/double booking).
         $isTaken = Booking::where('schedule_id', $schedule->id)
             ->where('booking_date', $bookingDate)
             ->where('status', 'Dipesan')

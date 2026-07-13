@@ -25,9 +25,6 @@ class ChatController extends Controller
 
     public function doctorChat(Request $request, string $id)
     {
-        // $chats = Chat::where("sender_id", auth()->id())->where("status", "Aktif")->get();
-
-        // return view('member.chats.index', compact('chats'));
 
         $consultation = Consultation::where("id", $id)->first();
 

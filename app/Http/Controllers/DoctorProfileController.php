@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DoctorProfileController extends Controller
 {
-    /**
-     * Show the logged-in doctor's own profile edit form.
-     */
+   
     public function edit()
     {
         $doctor = Auth::user()->doctor;
@@ -25,9 +23,6 @@ class DoctorProfileController extends Controller
         return view('doctor.profile.edit', compact('doctor', 'specializations'));
     }
 
-    /**
-     * Update the logged-in doctor's own profile.
-     */
     public function update(Request $request)
     {
         $doctor = Auth::user()->doctor;

@@ -16,7 +16,6 @@ class DoctorSchedule extends Model
         'end_time',
     ];
 
-    // Relasi ke dokter
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');

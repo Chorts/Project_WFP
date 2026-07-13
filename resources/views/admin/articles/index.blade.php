@@ -1,16 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles Page</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-
-<body> -->
 @extends('layouts.adminlte4')
 @section('sidebar-articles')
     active
@@ -62,13 +49,10 @@
             </tbody>
         </table>
     </div>
-    <!-- </body>
 
-                </html> -->
 @endsection
 
 @push('modals')
-    {{-- Modal Create --}}
     <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form method="POST" action="{{ route('admin.articles.store') }}">
@@ -109,7 +93,6 @@
         </div>
     </div>
 
-    {{-- Modal Edit Type B --}}
     <div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

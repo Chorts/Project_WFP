@@ -61,7 +61,6 @@ Bookings
 @endsection
 
 @push('modals')
-{{-- Modal Create --}}
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form method="POST" action="{{ route('admin.bookings.store') }}">
@@ -106,7 +105,6 @@ Bookings
     </div>
 </div>
 
-{{-- Modal Edit Type B --}}
 <div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
